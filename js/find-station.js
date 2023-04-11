@@ -37,7 +37,7 @@ async function listPossibleMatches(name) {
 	if (data.LocationList.StopLocation.length > 0) {
 		data.LocationList.StopLocation.forEach((stop) => {
 			output.innerHTML += `
-				<li><a href="station.html?id=${stop.id}&train=${trainSelect.checked}&metro=${metroSelect.checked}&date=${date.value}">${stop.name}</a></li>
+				<li><a href="departures.html?id=${stop.id}&train=${trainSelect.checked}&metro=${metroSelect.checked}&date=${date.value}">${stop.name}</a></li>
 			`;
 		});
 	}
