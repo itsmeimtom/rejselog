@@ -20,7 +20,10 @@ let globalTrain = {
 	"journeyDetailUrl": undefined,
 	"stops": [],
 	"startStationIndex": undefined,
-	"endStationIndex": undefined
+	"endStationIndex": undefined,
+	"distMiles": undefined,
+	"distChains": undefined,
+	"distKm": undefined
 };
 
 function getEmoji(code) {
@@ -79,7 +82,7 @@ function getServiceOperator(code) {
 		case "LYN": return "DSB";
 	}
 
-	return "Could be:<br>DSB, Arriva, SJ or Oresundstag";
+	return "Could be: DSB, Arriva, SJ or Oresundstag";
 }
 
 // function getServiceTrainType(code) {

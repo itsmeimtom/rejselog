@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>localStorage Journey Viewer</title>
+</head>
+<body>
+	<h1>localStorage Journey Viewer</h1>
+
+	<ol id="out">
+
+	</ol>
+
+	<script src="js/0common.js"></script>
+	<script>
+		const out = document.getElementById("out");
+
+		if (!localStorage.getItem("journeys")) alert("Missing localStorage object");
+
+		const journeys = JSON.parse(localStorage.getItem("journeys"));
+		
+		if(journeys.length === 0) alert("No journeys");
+
+		for(const j of journeys) {
+			out.innerHTML += `
+			<li>
+				<h2>${j.origin} (${j.originTrack?j.originTrack:"?"}) to ${j.destination} (${j.destinationTrack?j.destinationTrack:"?"})</h2>
+				<p>Departing ${j.depDate} ${j.depTime}</p>
+				<p>Arriving ${j.arrDate} ${j.arrTime}</p>
+				<p>${j.distanceMiles} miles and ${j.distanceChains} chains</p>
+				<p>Dir: ${j.direction}</p>
+				<p>${j.name} (${j.type})</p>
+				<p>${j.operator}</p>
+				<p>Note: <i>${j.note}</i></p>
+			</li>
+			`;
+		}
+	</script>
+</body>
+</html>

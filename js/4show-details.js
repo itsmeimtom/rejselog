@@ -27,11 +27,9 @@ function stepFourShowDetails() {
 		`);
 	}
 
-	const distanceStr = `
-		${convertToMilesAndChains(runningDist)}
-		<br>
-		${(runningDist / 1000).toFixed(5)} km
-	`;
+	globalTrain.distMiles = convertToMilesAndChains(runningDist)[0];
+	globalTrain.distChains = convertToMilesAndChains(runningDist)[1];
+	globalTrain.distKm = (runningDist / 1000).toFixed(3);
 
 	document.getElementById("details-output").innerHTML = `
 	
@@ -53,7 +51,10 @@ function stepFourShowDetails() {
 		<div>
 			<h2>Route &amp; Distance</h2>
 			<p>${globalTrain.direction}</p>
-			<p>${distanceStr}</p>
+			<p>
+				${globalTrain.distMiles} miles and ${globalTrain.distChains} chains<br>
+				(${globalTrain.distKm} km)
+			</p>
 		</div>
 
 		<div>
@@ -82,15 +83,56 @@ function stepFourShowDetails() {
 
 	<h2>Notes</h2>
 	<p>Distances are approx, calcualted as-the-crow-flies between stations. Info may not be complete or accurate.</p>
+
+	<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+		<button onclick="startOverConf();">${emojiIconString("❌")} Start Over</button>
+		<button onclick="saveJourney();">${emojiIconString("💾")} Save this Journey</button>
+	</div>
  	`;
 
 	document.getElementById("step-1").style.display = "none";
-	document.getElementById("step-1-strip").style.display = "none";
+	// document.getElementById("step-1-strip").style.display = "none";
 	document.getElementById("step-2").style.display = "none";
-	document.getElementById("step-2-strip").style.display = "none";
+	// document.getElementById("step-2-strip").style.display = "none";
 	document.getElementById("step-3").style.display = "none";
 	document.getElementById("step-4").style.display = "block";	
 }
+
+function startOverConf() {
+	if(confirm("Are you sure you want to start over?")) {
+		location.reload();
+	}
+}
+
+function saveJourney() {
+	if (!localStorage.getItem("journeys")) {
+		localStorage.setItem("journeys", JSON.stringify([]));
+	}
+
+	const journeys = JSON.parse(localStorage.getItem("journeys"));
+	
+	journeys.push({
+		origin: globalStation.name,
+		originTrack: globalTrain.track,
+		destination: globalTrain.stops[globalTrain.endStationIndex].name,
+		destinationTrack: globalTrain.stops[globalTrain.endStationIndex].track,
+		depDate: globalTrain.date,
+		depTime: globalTrain.stops[0].depTime,
+		arrDate: globalTrain.date,
+		arrTime: globalTrain.stops[globalTrain.endStationIndex].arrTime,
+		direction: globalTrain.direction,
+		distanceMiles: globalTrain.distMiles,
+		distanceChains: globalTrain.distChains,
+		distanceKm: globalTrain.distKm,
+		operator: getServiceOperator(globalTrain.type),
+		type: getServiceType(globalTrain.type),
+		name: globalTrain.name,
+		vehicle: getServiceVehicle(globalTrain.type),
+		note: "Distances are approx, calcualted as-the-crow-flies between stations. Info may not be complete or accurate."
+	});
+	localStorage.setItem("journeys", JSON.stringify(journeys));
+}
+
 
 // chatgpt's first attempt 
 // "please could you code a JavaScript function that calculates
@@ -124,5 +166,5 @@ function convertToMilesAndChains(lengthInMeters) {
 	const miles = Math.floor(totalChains / 80);
 	const chains = Math.round(totalChains % 80);
 
-	return `${miles} miles, ${chains} chains`;
+	return [miles, chains];
 }
