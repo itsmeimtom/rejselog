@@ -17,14 +17,14 @@
 	<section id="step-1">
 		<form>
 			<div>
-				<label for="departure-station">Departure Station</label><br>
+				<label for="departure-station"><span class="emoji-icon">💨</span> Departure Station</label><br>
 				<input type="text" id="departure-station">
 			</div>
 			
 			<span>&nbsp;</span>
 	
 			<div>
-				<label for="date">Date &amp; Time</label><br>
+				<label for="date"><span class="emoji-icon">📅</span> Date &amp; Time</label><br>
 				<input type="datetime-local" id="date">
 			</div>
 		</form>
@@ -42,7 +42,7 @@
 
 	<section id="step-2" style="display: none;">
 		<form>
-			<label for="metro-toggle">Metro Services</label>
+			<label for="metro-toggle"><span class="emoji-icon">Ⓜ️</span> Metro Services</label>
 			<input type="checkbox" id="metro-toggle"><br>
 			<i>Switching to showing Metro services will adjust the date to be from the current time.<br>There is currently no way to view future/past Metro services.</i>
 		</form>
@@ -53,6 +53,8 @@
 	<section id="step-2-strip" style="display: none;">
 		<span id="service-name"></span>
 		
+		<span id="service-type"></span>
+
 		<div>
 			<span id="service-time"></span><br>
 			<span id="service-track"></span>

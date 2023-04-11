@@ -92,57 +92,6 @@ function stepFourShowDetails() {
 	document.getElementById("step-4").style.display = "block";	
 }
 
-function getServiceType(code) {
-	switch (code.toUpperCase()) {
-		case "IC": return "Intercity";
-		case "LYN": return "IntercityLyn";
-		case "REG": return "Regionaltog";
-		case "S": return "S-tog";
-		case "M": return "Københavns Metro";
-		case "LET": return "Letbane";
-		case "TOG": return "Other Train";
-	}
-
-	return "Unknown";
-}
-
-function getServiceVehicle(code) {
-	code = code.toUpperCase();
-	if(
-	code === "IC"
-	|| code === "LYN"
-	|| code === "REG"
-	|| code === "S"
-	|| code === "TOG"
-	) return "Train";
-
-	if(code === "M" || code === "LET") return "Metro";
-
-	return "Unknown";
-}
-
-function getServiceOperator(code) {
-	code = code.toUpperCase();
-
-	switch(code) {
-		case "M": return "Københavns Metro";
-		case "S": return "DSB S-tog";
-		case "LYN": return "DSB";
-	}
-
-	return "Could be:<br>DSB, Arriva, SJ or Oresundstag";
-}
-
-// function getServiceTrainType(code) {
-// 	code = code.toUpperCase();
-
-// 	switch(code) {
-// 		case "M": return "Metro";
-// 	}
-
-// 	return "Unknown";
-// }
-
 // chatgpt's first attempt 
 // "please could you code a JavaScript function that calculates
 // "the distance between two sets of WGS84 coordinates, taking

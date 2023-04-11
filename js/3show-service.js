@@ -21,6 +21,7 @@ async function stepThreeShowService() {
 	if (data.JourneyDetail.error) return alert(`Something went wrong. Is this a rail (not metro!) service?\n\n${data.JourneyDetail.error}`); 
 
 	document.getElementById("service-name").innerHTML = globalTrain.name;
+	document.getElementById("service-type").innerHTML = `${getEmoji(globalTrain.type)} ${getServiceType(globalTrain.type)}`;
 	document.getElementById("service-time").innerHTML = globalTrain.time;
 	document.getElementById("service-dest").innerHTML = globalTrain.finalStop;
 	document.getElementById("service-via").innerHTML = globalTrain.direction;
