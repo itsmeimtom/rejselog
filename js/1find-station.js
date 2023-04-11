@@ -44,6 +44,8 @@ async function stepOneListMatches(name) {
 					globalStation.name = '${stop.name}';
 					globalStation.date = '${date.value.split("T")[0]}';
 					globalStation.time = '${date.value.split("T")[1]}';
+					globalStation.x = ${stop.x};
+					globalStation.y = ${stop.y};
 					stepTwoListDeps();
 				">${stop.name}</li>
 			`;

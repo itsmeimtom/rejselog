@@ -32,9 +32,25 @@ async function stepThreeShowService() {
 
 	stopList.innerHTML = "";
 
+
+
 	if (data.JourneyDetail.Stop.length > 0) {
 
 		let stopIndex = -1;
+
+		for(const i in data.JourneyDetail.Stop) {
+			const s = data.JourneyDetail.Stop[i];
+
+			console.log(s.name, globalStation.name);
+			if (s.name === globalStation.name) {
+				console.log("MATCH");
+				globalTrain.startStationIndex = parseInt(i);
+				break;
+			} else {
+				console.log("NO MATCH");
+			}
+		}
+
 		data.JourneyDetail.Stop.forEach((stop) => {
 			globalTrain.stops.push(
 				{
@@ -48,11 +64,21 @@ async function stepThreeShowService() {
 			
 			stopIndex++;
 
-			if (!stop.arrTime) return;
+			// if (!stop.arrTime) return;
 
+			let onclick = `globalTrain.endStationIndex = ${stopIndex}; stepFourShowDetails();`;
+			let style = "";
+
+			console.log(stopIndex, globalTrain.startStationIndex);
+
+			if(stopIndex <= globalTrain.startStationIndex) {
+				onclick = "alert('You have started after this stop!');";
+				style = "style='opacity: 0.5; font-size: 0.8em; padding: 0 0.5em;'";
+			}
+				
 			stopList.innerHTML += `
-				<li onclick="globalTrain.endStationIndex = ${stopIndex}; stepFourShowDetails();">
-					<b>${stop.name}</b>, arriving ${stop.arrTime}
+				<li onclick="${onclick}" ${style}>
+					<b>${stop.name}</b>, arriving ${stop.arrTime ? stop.arrTime : "?"}
 				</li>
 			`;
 		});

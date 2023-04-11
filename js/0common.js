@@ -4,7 +4,9 @@ let globalStation = {
 	"name": undefined,
 	"id": undefined,
 	"date": undefined,
-	"time": undefined
+	"time": undefined,
+	"x": undefined,
+	"y": undefined
 };
 
 let globalTrain = {
@@ -17,5 +19,6 @@ let globalTrain = {
 	"track": undefined,
 	"journeyDetailUrl": undefined,
 	"stops": [],
+	"startStationIndex": undefined,
 	"endStationIndex": undefined
 };
