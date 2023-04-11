@@ -4,12 +4,71 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="refresh" content="3; url=find-station.html">
-	<title>Landing</title>
-</head>
+	<title>Document</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet"> 
+
+	<link rel="stylesheet" href="index.css">
+</head>	
 <body>
-	<ol>
-		<li><a href="find-station.html">find station</a></li>
-	</ol>
+
+	<section id="step-1">
+		<form>
+			<div>
+				<label for="departure-station">Departure Station</label><br>
+				<input type="text" id="departure-station">
+			</div>
+			
+			<span>&nbsp;</span>
+	
+			<div>
+				<label for="date">Date &amp; Time</label><br>
+				<input type="datetime-local" id="date">
+			</div>
+		</form>
+	
+		<ul id="station-list"></ul>
+	</section>
+
+	<section id="step-1-strip" style="display: none;">
+		<div>
+			<span id="departure-station-name"></span> 
+			(<span id="departure-station-id"></span>)
+		</div>
+		<span>&nbsp;</span>
+		<div>
+			<span id="departure-station-date"></span>
+		</div>
+	</section>
+
+	<section id="step-2" style="display: none;">
+		<ol id="service-list"></ol>
+	</section>
+
+	<section id="step-2-strip" style="display: none;">
+		<span id="service-name"></span>
+		
+		<div>
+			<span id="service-time"></span><br>
+			<span id="service-track"></span>
+		</div>
+
+		<div>
+			<span id="service-dest"></span><br>
+			<span id="service-via"></span>
+		</div>		
+	</section>
+
+	<section id="step-3" style="display: none">
+		<ol id="stop-list"></ol>
+	</section>
+	
+
+	<script src="js/0common.js"></script>
+	<script src="js/1find-station.js"></script>
+	<script src="js/2list-deps.js"></script>
+	<script src="js/3show-service.js"></script>
 </body>
 </html>
