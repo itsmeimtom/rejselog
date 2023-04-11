@@ -1,5 +1,12 @@
 const serviceList = document.getElementById("service-list");
 
+const metroToggle = document.getElementById("metro-toggle");
+metroToggle.checked = false;
+metroToggle.addEventListener("change", () => {
+	stepTwoListDeps();
+});
+
+
 async function stepTwoListDeps() {
 	if(!globalStation.id) return alert("No station ID?");
 	if(!globalStation.date) return alert("No date?");
@@ -13,7 +20,23 @@ async function stepTwoListDeps() {
 	const time = globalStation.time.split(":");
 	const timeFormatted = `${time[0]}:${time[1]}`;
 
-	const url = endpoint + `departureBoard?id=${globalStation.id}&useTog=1&metro=1&useBus=0&date=${dateFormatted}&time=${timeFormatted}&format=json`;
+
+	let tog = 0;
+	let metro = 0;
+	let dateUrl = "";
+
+	if(metroToggle.checked) {
+		tog = 0;
+		metro = 1;
+		dateUrl = "";
+
+	} else {
+		tog = 1;
+		metro = 0;
+		dateUrl = `&date=${dateFormatted}&time=${timeFormatted}`;
+	}
+
+	const url = endpoint + `departureBoard?id=${globalStation.id}&useTog=${tog}&useMetro=${metro}&useBus=0${dateUrl}&format=json`;
 
 	const response = await fetch(url);
 	const data = await response.json();
@@ -31,11 +54,17 @@ async function stepTwoListDeps() {
 			document.getElementById("step-1-strip").style.display = "flex";
 			document.getElementById("departure-station-name").innerHTML = globalStation.name;
 			document.getElementById("departure-station-id").innerHTML = globalStation.id;
-			document.getElementById("departure-station-date").innerHTML = `${dateFormatted}, ${timeFormatted}`;
+			if(metroToggle.checked) {
+				document.getElementById("departure-station-date").innerHTML = "From now";
+			} else {
+				document.getElementById("departure-station-date").innerHTML = `${dateFormatted}, ${timeFormatted}`;
+			}
 
 			let extra = "";
-
 			if(service.direction !== service.finalStop) extra += `<br><i>${service.direction}</i>`;
+			
+			let cancelled = "";
+			if(service.cancelled) cancelled = " cancelled";
 
 			serviceList.innerHTML += `
 				<li onclick="
@@ -49,7 +78,7 @@ async function stepTwoListDeps() {
 					globalTrain.track = ${service.track};
 
 					stepThreeShowService();
-				" class="service">
+				" class="service${cancelled}">
 					<span class="service-name">${service.name}</span>
 
 					<span class="service-time">${service.time}</span>

@@ -1,5 +1,5 @@
 function stepFourShowDetails() {	
-	if (typeof(globalTrain.startStationIndex) !== "number") alert("Couldn't find a start station!");
+	if (typeof(globalTrain.startStationIndex) !== "number") alert("Couldn't find a start station!\nIf you are using a local service check if the start stop name is correct - it might not match the name of a nearby DSB station.");
 	if (typeof(globalTrain.endStationIndex) !== "number") alert("No end station picked!");
 
 	console.log(`
@@ -58,9 +58,9 @@ function stepFourShowDetails() {
 
 		<div>
 			<h2>Operator &amp; Running Info</h2>
-			<p>DSB, Arriva, SJ, Oresundstag</p>
-			<p>Identity <b>${globalTrain.type} ${globalTrain.name}</b></p>
-			<p>Train, Metro</p>
+			<p>${getServiceOperator(globalTrain.type)}</p>
+			<p>${getServiceType(globalTrain.type)} <b>${globalTrain.name}</b></p>
+			<p>${getServiceVehicle(globalTrain.type)}</p>
 		</div>
 	</div>
 
@@ -89,30 +89,58 @@ function stepFourShowDetails() {
 	document.getElementById("step-2").style.display = "none";
 	document.getElementById("step-2-strip").style.display = "none";
 	document.getElementById("step-3").style.display = "none";
-	document.getElementById("step-4").style.display = "block";
-	
+	document.getElementById("step-4").style.display = "block";	
 }
 
+function getServiceType(code) {
+	switch (code.toUpperCase()) {
+		case "IC": return "Intercity";
+		case "LYN": return "IntercityLyn";
+		case "REG": return "Regionaltog";
+		case "S": return "S-tog";
+		case "M": return "Københavns Metro";
+		case "LET": return "Letbane";
+		case "TOG": return "Other Train";
+	}
 
+	return "Unknown";
+}
 
-// thank you stackoverflow
-// https://stackoverflow.com/a/27943
-// function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-// 	var R = 6371; // Radius of the earth in km
-// 	var dLat = deg2rad(lat2 - lat1);  // deg2rad below
-// 	var dLon = deg2rad(lon2 - lon1);
-// 	var a =
-// 		Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-// 		Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-// 		Math.sin(dLon / 2) * Math.sin(dLon / 2)
-// 		;
-// 	var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-// 	var d = R * c; // Distance in km
-// 	return d;
-// }
+function getServiceVehicle(code) {
+	code = code.toUpperCase();
+	if(
+	code === "IC"
+	|| code === "LYN"
+	|| code === "REG"
+	|| code === "S"
+	|| code === "TOG"
+	) return "Train";
 
-// function deg2rad(deg) {
-// 	return deg * (Math.PI / 180)
+	if(code === "M" || code === "LET") return "Metro";
+
+	return "Unknown";
+}
+
+function getServiceOperator(code) {
+	code = code.toUpperCase();
+
+	switch(code) {
+		case "M": return "Københavns Metro";
+		case "S": return "DSB S-tog";
+		case "LYN": return "DSB";
+	}
+
+	return "Could be:<br>DSB, Arriva, SJ or Oresundstag";
+}
+
+// function getServiceTrainType(code) {
+// 	code = code.toUpperCase();
+
+// 	switch(code) {
+// 		case "M": return "Metro";
+// 	}
+
+// 	return "Unknown";
 // }
 
 // chatgpt's first attempt 

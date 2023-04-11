@@ -99,6 +99,10 @@ li.service {
 	padding: 1em 0.5em;
 }
 
+li.service.cancelled {
+	background-color: #faa;
+}
+
 span.service-name {
 	font-weight: bold;
 	border: 1px solid #000;
