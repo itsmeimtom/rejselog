@@ -1,2 +1,2 @@
-# rejseplanen-railmiles
-Find a service from Rejseplanen.dk and see what you need to enter in RailMiles.me
+# rejseplanen-logger
+Save rail journeys made in DK. Intended to create files with info thag can be inputted into RailMiles.me
