@@ -22,3 +22,20 @@ let globalTrain = {
 	"startStationIndex": undefined,
 	"endStationIndex": undefined
 };
+
+function getEmoji(code) {
+	switch (code.toUpperCase()) {
+		case "IC": return emojiIconString("🚅");
+		case "LYN": return emojiIconString("⚡");
+		case "REG": return emojiIconString("🚆");
+		case "S": return emojiIconString("🚇");
+		case "M": return emojiIconString("Ⓜ️");
+		case "LET": return emojiIconString("🚃");
+		case "TOG": return emojiIconString("🚆");
+
+	}
+}
+
+function emojiIconString(emoji) {
+	return `<span class="emoji-icon">${emoji}</span>`;
+}

@@ -53,9 +53,8 @@ async function stepTwoListDeps() {
 			document.getElementById("step-1").style.display = "none";
 			document.getElementById("step-1-strip").style.display = "flex";
 			document.getElementById("departure-station-name").innerHTML = globalStation.name;
-			document.getElementById("departure-station-id").innerHTML = globalStation.id;
 			if(metroToggle.checked) {
-				document.getElementById("departure-station-date").innerHTML = "From now";
+				document.getElementById("departure-station-date").innerHTML = "Now";
 			} else {
 				document.getElementById("departure-station-date").innerHTML = `${dateFormatted}, ${timeFormatted}`;
 			}
@@ -79,7 +78,7 @@ async function stepTwoListDeps() {
 
 					stepThreeShowService();
 				" class="service${cancelled}">
-					<span class="service-name">${service.name}</span>
+					<span class="service-name">${getEmoji(service.type)} ${service.name}</span>
 
 					<span class="service-time">${service.time}</span>
 
