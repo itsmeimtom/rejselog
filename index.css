@@ -14,6 +14,15 @@ span.emoji-icon {
 	text-align: center;
 }
 
+a {
+	color: #00f;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 input {
 	padding: 0.5em;
 	background-color: hsl(0, 0%, 100%);
