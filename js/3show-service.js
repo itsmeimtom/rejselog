@@ -37,7 +37,7 @@ async function stepThreeShowService(APIurl, name, time, date, id, direction, fin
 			if(!stop.arrTime) return;
 
 			stopList.innerHTML += `
-				<li onclick="alert('not implemented yet')>
+				<li onclick="alert('not implemented yet')">
 					<b>${stop.name}</b>, arriving ${stop.arrTime}
 				</li>
 			`;
