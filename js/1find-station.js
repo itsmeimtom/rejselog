@@ -24,7 +24,7 @@ function stepOneinputsChange() {
 
 document.querySelector("form").addEventListener("submit", (e) => {
 	e.preventDefault();
-	
+
 	document.querySelector("ul#station-list li").click();
 });
 
@@ -39,7 +39,13 @@ async function stepOneListMatches(name) {
 	if (data.LocationList.StopLocation.length > 0) {
 		data.LocationList.StopLocation.forEach((stop) => {
 			stationList.innerHTML += `
-				<li onclick="stepTwoListDeps(${stop.id}, '${stop.name}', '${date.value}', true, true)">${stop.name}</li>
+				<li onclick="
+					globalStation.id = '${stop.id}';
+					globalStation.name = '${stop.name}';
+					globalStation.date = '${date.value.split("T")[0]}';
+					globalStation.time = '${date.value.split("T")[1]}';
+					stepTwoListDeps();
+				">${stop.name}</li>
 			`;
 		});
 	}
