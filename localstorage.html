@@ -62,17 +62,20 @@
 		if(journeys.length === 0) alert("No journeys");
 
 		for(const j of journeys) {
+			// thank you, chatgpt:
+			// "edit this piece of javascript so that all of the
+			// "included ${} bits are 'Unset' if the variable doesnt exist"
 			out.innerHTML += `
 			<li>
-				<h2>${j.origin} (${j.originPlatform?j.originPlatform:"?"}) to ${j.destination} (${j.destinationPlatform?j.destinationPlatform:"?"})</h2>
-				<p>Departing ${j.departureTimeActual} (planned ${j.departureTimePlanned})</p>
-				<p>Arriving ${j.arrivalTimeActual} (planned ${j.arrivalTimePlanned})</p>
-				<p>${j.distanceKm} Kilometres</p>
-				<p>${j.route}</p>
-				<p>${j.identity} (${j.vehicleType})</p>
-				<p>${j.operatorName}</p>
-				<p>Traction: ${j.vehicles.join(' ')}</p>
-				<p>Note: <i>${j.notes}</i></p>
+				<h2>${j.origin ? j.origin : "Unset"} (${j.originPlatform ? j.originPlatform : "Unset"}) to ${j.destination ? j.destination : "Unset"} (${j.destinationPlatform ? j.destinationPlatform : "Unset"})</h2>
+				<p>Departing ${j.departureTimeActual ? j.departureTimeActual : "Unset"} (planned ${j.departureTimePlanned ? j.departureTimePlanned : "Unset"})</p>
+				<p>Arriving ${j.arrivalTimeActual ? j.arrivalTimeActual : "Unset"} (planned ${j.arrivalTimePlanned ? j.arrivalTimePlanned : "Unset"})</p>
+				<p>${j.distanceKm ? j.distanceKm : "Unset"} Kilometres</p>
+				<p>${j.route ? j.route : "Unset"}</p>
+				<p>${j.identity ? j.identity : "Unset"} (${j.vehicleType ? j.vehicleType : "Unset"})</p>
+				<p>${j.operatorName ? j.operatorName : "Unset"}</p>
+				<p>Traction: ${j.vehicles ? j.vehicles : "Unset"}</p>
+				<p>Note: <i>${j.notes ? j.notes : "Unset"}</i></p>
 			</li>
 			`;
 		}
