@@ -83,11 +83,13 @@ function stepFourShowDetails() {
 
 
 	document.getElementById("step-1").style.display = "none";
-	// document.getElementById("step-1-strip").style.display = "none";
+	document.getElementById("step-1-strip").style.display = "none";
 	document.getElementById("step-2").style.display = "none";
-	// document.getElementById("step-2-strip").style.display = "none";
+	document.getElementById("step-2-strip").style.display = "none";
 	document.getElementById("step-3").style.display = "none";
 	document.getElementById("step-4").style.display = "block";
+	document.getElementById("step-4").scrollIntoView();
+
 }
 
 // set up updating onchange

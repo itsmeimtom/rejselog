@@ -9,7 +9,7 @@ date.value = new Date().toISOString().slice(0, 16);
 departureStation.addEventListener("input", stepOneinputsChange);
 date.addEventListener("input", stepOneinputsChange);
 
-function stepOneinputsChange() {	
+function stepOneinputsChange() {
 	const value = departureStation.value;
 
 	if (value.length < 3) return stationList.innerHTML = "<li>Type some more to search</li>";
@@ -50,7 +50,10 @@ async function stepOneListMatches(name) {
 				">${stop.name}</li>
 			`;
 		});
+	} else {
+		stationList.innerHTML = "<li>No matches found</li>";
 	}
+	document.getElementById("step-1").scrollIntoView();
 }
 
 
