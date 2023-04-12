@@ -24,6 +24,8 @@ async function stepTwoListDeps() {
 	let metro = 0;
 	let dateUrl = "";
 
+	if (journey.origin.toLowerCase().includes("(metro)")) metroToggle.checked = true;
+
 	if(metroToggle.checked) {
 		tog = 0;
 		metro = 1;

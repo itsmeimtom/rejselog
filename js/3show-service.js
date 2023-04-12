@@ -21,7 +21,10 @@ async function stepThreeShowService() {
 		}
 	}
 
-	if (!journey.journeyDetailUrl) return alert("API Error: No URL was provided. Please try again. If this error persists, please let me know.");
+	if (!journey.journeyDetailUrl) {
+		alert("API Error: No URL was provided. Please try again. If this error persists, please let me know.\n\nYou can start again or manually enter information in the next step.");
+		return stepFourShowDetails(true);
+	}
 
 	// Replace the second ? with & (https://stackoverflow.com/a/44568739)
 	// and swap the endpoint
@@ -38,7 +41,10 @@ async function stepThreeShowService() {
 
 	console.log(data);
 
-	if (data.JourneyDetail.error) return alert(`API Returned Error: \n\n${data.JourneyDetail.error}`); 
+	if (data.JourneyDetail.error) {
+		alert(`API Returned Error: \n\n${data.JourneyDetail.error}\n\nYou can start again or manually enter information in the next step.`);
+		return stepFourShowDetails(true);
+	}
 
 	document.getElementById("service-name").innerHTML = journey.identity;
 	document.getElementById("service-type").innerHTML = `${getEmoji(journey.type)} ${getServiceType(journey.type)}`;

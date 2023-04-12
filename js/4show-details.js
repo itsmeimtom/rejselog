@@ -1,13 +1,30 @@
-function stepFourShowDetails() {
+function stepFourShowDetails(force) {
+	if(force) {
+		journey.stops = [
+			{
+				name: "dummy",
+				arrTime: "00:00",
+				depTime: "00:00",
+				x: 0,
+				y: 0
+			}
+		];
+		journey.startStationIndex = 0;
+		journey.endStationIndex = 0;
+	}
 
-	if (typeof(journey.startStationIndex) !== "number") alert("Couldn't find a start station!\nYou will need to reload and try again. Sorry!\n\nThis is likely because you are viewing a Letbane service but have selected a station that is not a Letbane stop.");
-	if (typeof(journey.endStationIndex) !== "number") alert("Couldn't find an end station!\nYou will need to reload and try again. Sorry!\n\nThis is likely a bug, please let me know and I\'ll investigate.");
+	if (typeof(journey.startStationIndex) !== "number") { 
+		alert("Couldn't find a start station!\nYou will need to reload and try again. Sorry!\n\nThis is likely because you are viewing a Letbane service but have selected a station that is not a Letbane stop.");
+	}
+
+	if (typeof(journey.endStationIndex) !== "number") {
+		alert("Couldn't find an end station!\nYou will need to reload and try again. Sorry!\n\nThis is likely a bug, please let me know and I\'ll investigate.");
+	}
 
 	console.log(`
-		starting at ${journey.stops[journey.startStationIndex].name} (${journey.startStationIndex}),
-		ending at ${journey.stops[journey.endStationIndex].name} (${journey.endStationIndex})
+		starting at ${journey.stops[journey.startStationIndex] ? journey.stops[journey.startStationIndex].name : "MISSING START"} (${journey.startStationIndex}),
+		ending at ${journey.stops[journey.endStationIndex] ? journey.stops[journey.endStationIndex].name : "MISSING END"} (${journey.endStationIndex})
 	`);
-	journey.origin = journey.stops[journey.startStationIndex].name;
 
 	let runningDist = 0;
 	for (let i = journey.startStationIndex; i < journey.endStationIndex; i++) {
