@@ -21,6 +21,32 @@
 		</nav>
 	</header>
 
+
+	<button onclick="serverSave()" style="opacity: 0.5;">
+		<span class="emoji-icon">☁️</span> Save to Server
+	</button>
+
+	<button onclick="serverLoad()" style="opacity: 0.5;">
+		<span class="emoji-icon">☁️</span> Load from Server
+	</button>
+
+	<br><br>
+
+	<button onclick="exportJSON()"">
+		<span class="emoji-icon">🔣</span> Export all as JSON
+	</button>
+
+	<button onclick="exportCSV()" style="opacity: 0.5;">
+		<span class="emoji-icon">📃</span> Export all as CSV (RailMiles.me format)
+	</button>
+
+	<button onclick="importJSON()" style="opacity: 0.5;">
+		<span class="emoji-icon">📤</span> Import JSON
+	</button>
+
+
+	<hr>
+
 	<ol id="out">
 
 	</ol>
@@ -49,6 +75,31 @@
 				<p>Note: <i>${j.notes}</i></p>
 			</li>
 			`;
+		}
+
+		// thanks again, copilot
+		function exportJSON() {
+			const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(journeys));
+			const dlAnchorElem = document.createElement('a');
+			dlAnchorElem.setAttribute("href", dataStr);
+			dlAnchorElem.setAttribute("download", `rjl-journeys-${Date.now()}.json`);
+			dlAnchorElem.click();
+		}
+
+		function exportCSV() {
+			return alert("Not implemented yet. Sorry!");
+		}
+
+		function importJSON() {
+			return alert("Not implemented yet. Sorry!");
+		}
+
+		function serverSave() {
+			return alert("Not implemented yet. Sorry!");
+		}
+
+		function serverLoad() {
+			return alert("Not implemented yet. Sorry!");
 		}
 	</script>
 </body>
