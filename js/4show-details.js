@@ -40,6 +40,16 @@ function stepFourShowDetails() {
 
 	journey.notes = `This journey was created by go.TomR.me/rjl\nDistances are approximate, calculated as-the-crow-flies between stations. Info may not be complete or accurate.`;
 
+	// check if journey spills into next day
+	let hours = [];
+	hours.push(journey.departureTimePlanned.split(" ")[1].split(":")[0]);
+	hours.push(journey.arrivalTimePlanned.split(" ")[1].split(":")[0]);
+	hours.push(journey.departureTimeActual.split(" ")[1].split(":")[0]);
+	hours.push(journey.arrivalTimeActual.split(" ")[1].split(":")[0]);
+	
+	// if 23 and 00 are in in the array
+	if (hours.includes("23") && hours.includes("00")) alert("This journey appears to span midnight. Please check the dates are correct.");
+
 	// show the details
 	document.getElementById("out-origin").value = journey.origin;
 	document.getElementById("out-destination").value = journey.destination;
@@ -109,6 +119,17 @@ function setActual(which) {
 		default:
 			alert("How did you get here?");
 	}
+
+	stepFourShowDetails();
+}
+
+function setNow() {
+	const now = new Date();
+
+	let date = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0') }.${now.getFullYear()}`;
+	let time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+	journey.arrivalTimeActual = `${date} ${time}`;
 
 	stepFourShowDetails();
 }

@@ -72,7 +72,9 @@
 
 	<section id="step-4" style="display: none;">
 		<label for="out-origin">Origin</label>
-		<input type="text" id="out-origin" readonly><br>
+		<input type="text" id="out-origin" readonly>
+
+		&bull;
 
 		<label for="out-originPlatform">Track</label>
 		<input type="text" id="out-originPlatform"><br>
@@ -80,13 +82,15 @@
 		<label for="out-departureTimeActual">Actual Departure</label>
 		<input type="text" id="out-departureTimeActual">
 
-		<button onclick="setActual('dep');"><span class="emoji-icon">🕒</span> Set to Planned</button>
+		<button onclick="setActual('dep');"><span class="emoji-icon">📜</span> Set to Planned</button>
 
 
 		<hr>
 		
 		<label for="out-destination">Destination</label>
-		<input type="text" id="out-destination" readonly><br>
+		<input type="text" id="out-destination" readonly>
+
+		&bull;
 
 		<label for="out-destinationPlatform">Track</label>
 		<input type="text" id="out-destinationPlatform"><br>
@@ -94,7 +98,8 @@
 		<label for="out-arrivalTimeActual">Actual Arrival</label>
 		<input type="text" id="out-arrivalTimeActual">
 
-		<button onclick="setActual('arr');"><span class="emoji-icon">🕒</span> Set to Planned</button>
+		<button onclick="setActual('arr');"><span class="emoji-icon">📜</span> Set to Planned</button>
+		<button onclick="setNow('arr');"><span class="emoji-icon">⌚</span> Set to Now</button>
 
 		<hr>
 
@@ -131,6 +136,8 @@
 		<label for="out-notes">Notes</label>
 		<textarea id="out-notes" rows="5" style="width: 100%; height: 4em;"></textarea>
 
+		<hr>
+
 		<div style="display: flex; justify-content: space-between; align-items: flex-start;">
 			<button onclick="startOverConf();"><span class="emoji-icon">❌</span> Start Over</button>
 			
@@ -147,7 +154,7 @@
 		</p>
 
 		<p>
-			<span class="emoji-icon">🕰️</span> All times should (hopefully) be in local Danish time.
+			<span class="emoji-icon">🕰️</span> All times should (hopefully) be in local Danish time. DD.MM.YY and HH:MM.
 		</p>
 
 		<p>
