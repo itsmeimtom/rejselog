@@ -177,6 +177,9 @@ function saveJourney() {
 	// check dates
 	for (const id of ["departureTimeActual", "arrivalTimeActual", "departureTimePlanned", "arrivalTimePlanned"]) {
 		// if doesnt match the regex (holy crap copilot generated this regex without any prompting)
+
+		if(journey[id].length === 0) continue;
+
 		if (!journey[id].match(/^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/)) return alert(`Please check the ${id} date format. It should be DD.MM.YYYY HH:MM`);
 	}
 
