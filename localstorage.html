@@ -51,9 +51,11 @@
 
 	<hr>
 
-	<ol id="out">
+	<section>
+		<ol id="out">
 
-	</ol>
+		</ol>
+	</section>
 
 	<script src="js/0common.js"></script>
 	<script>
@@ -65,23 +67,24 @@
 		
 		if(journeys.length === 0) alert("No journeys");
 
+		let index = 0;
+
 		for(const j of journeys) {
 			// thank you, chatgpt:
 			// "edit this piece of javascript so that all of the
 			// "included ${} bits are 'Unset' if the variable doesnt exist"
 			out.innerHTML += `
 			<li>
-				<h2>${j.origin ? j.origin : "Unset"} (${j.originPlatform ? j.originPlatform : "Unset"}) to ${j.destination ? j.destination : "Unset"} (${j.destinationPlatform ? j.destinationPlatform : "Unset"})</h2>
-				<p>Departing ${j.departureTimeActual ? j.departureTimeActual : "Unset"} (planned ${j.departureTimePlanned ? j.departureTimePlanned : "Unset"})</p>
-				<p>Arriving ${j.arrivalTimeActual ? j.arrivalTimeActual : "Unset"} (planned ${j.arrivalTimePlanned ? j.arrivalTimePlanned : "Unset"})</p>
-				<p>${j.distanceKm ? j.distanceKm : "Unset"} Kilometres</p>
-				<p>${j.route ? j.route : "Unset"}</p>
-				<p>${j.identity ? j.identity : "Unset"} (${j.vehicleType ? j.vehicleType : "Unset"})</p>
-				<p>${j.operatorName ? j.operatorName : "Unset"}</p>
-				<p>Traction: ${j.vehicles ? j.vehicles : "Unset"}</p>
-				<p>Note: <i>${j.notes ? j.notes : "Unset"}</i></p>
+				<p>${j.type ? j.type : "Type Missing"} <span>${j.identity ? j.identity : "Identity Missing"}</span> from <b>${j.origin}</b> to <b>${j.destination}</b> (${j.route})</p>
+				<p>${j.departureTimeActual} - ${j.arrivalTimeActual}</p>
+
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}'"><span class="emoji-icon">✏️</span> Edit this Journey</button>
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&quickset=true'"><span class="emoji-icon">⌚</span> Quick Set Arrival to Now</button>
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&delete=true'"><span class="emoji-icon">❌</span> Delete this Journey</button>
 			</li>
 			`;
+
+			index++;
 		}
 
 		function clearLocalStorage() {

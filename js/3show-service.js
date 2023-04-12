@@ -23,7 +23,7 @@ async function stepThreeShowService() {
 
 	if (!journey.journeyDetailUrl) {
 		alert("API Error: No URL was provided. Please try again. If this error persists, please let me know.\n\nYou can start again or manually enter information in the next step.");
-		return stepFourShowDetails(true);
+		return stepFourCalcDetails(true);
 	}
 
 	// Replace the second ? with & (https://stackoverflow.com/a/44568739)
@@ -43,7 +43,7 @@ async function stepThreeShowService() {
 
 	if (data.JourneyDetail.error) {
 		alert(`API Returned Error: \n\n${data.JourneyDetail.error}\n\nYou can start again or manually enter information in the next step.`);
-		return stepFourShowDetails(true);
+		return stepFourCalcDetails(true);
 	}
 
 	document.getElementById("service-name").innerHTML = journey.identity;
@@ -71,6 +71,7 @@ async function stepThreeShowService() {
 			if (s.name.toLowerCase() === journey.origin.toLowerCase()) {
 				console.log("MATCH");
 				journey.startStationIndex = parseInt(i);
+				journey.origin = s.name ? s.name : journey.origin;
 				break;
 			} else {
 				console.log("NO MATCH");
@@ -92,7 +93,12 @@ async function stepThreeShowService() {
 
 			// if (!stop.arrTime) return;
 
-			let onclick = `journey.endStationIndex = ${stopIndex}; stepFourShowDetails();`;
+			let onclick = `
+				journey.endStationIndex = ${stopIndex};
+				journey.destination = '${journey.stops[stopIndex].name ? journey.stops[stopIndex].name : journey.destination}';				
+				stepFourCalcDetails();
+				
+			`;
 			let style = "";
 
 			console.log(stopIndex, journey.startStationIndex);

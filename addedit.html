@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add or Edit a Journey</title>
+
+	<link rel="stylesheet" href="common.css">
+</head>
+<body>
+	<header>
+		<h1>Rejselog</h1>
+		<p>Log your rail journeys and view/export them later.</p>
+
+		<nav>
+			<a href="index.html"><span class="emoji-icon">➕</span> Home / Add a Journey</a>
+			<a href="localstorage.html"><span class="emoji-icon">📁</span> Previous Journeys</a>
+		</nav>
+	</header>
+
+	<section>
+		<h2 id="title">Hmm...</h2>
+
+		<label for="out-origin">Origin</label>
+		<input type="text" id="out-origin">
+
+		&bull;
+
+		<label for="out-originPlatform">Track</label>
+		<input type="text" id="out-originPlatform"><br>
+
+		<label for="out-departureTimeActual">Actual Departure</label>
+		<input type="text" id="out-departureTimeActual">
+
+		<button onclick="setActual('dep');"><span class="emoji-icon">📜</span> Set to Planned</button>
+
+
+		<hr>
+		
+		<label for="out-destination">Destination</label>
+		<input type="text" id="out-destination">
+
+		&bull;
+
+		<label for="out-destinationPlatform">Track</label>
+		<input type="text" id="out-destinationPlatform"><br>
+
+		<label for="out-arrivalTimeActual">Actual Arrival</label>
+		<input type="text" id="out-arrivalTimeActual">
+
+		<button onclick="setActual('arr');"><span class="emoji-icon">📜</span> Set to Planned</button>
+		<button onclick="setNow('arr');"><span class="emoji-icon">⌚</span> Set to Now</button>
+
+		<hr>
+
+		<label for="out-distanceKm">Distance Travelled (km)</label>
+		<input type="text" id="out-distanceKm"> <br>
+
+		<label for="out-route">Route (Direction)</label>
+		<input type="text" id="out-route">
+
+		<hr>
+
+		<label for="out-operatorName">Operator</label>
+		<input type="text" id="out-operatorName"><br>
+
+		<label for="out-identity">Identity (name)</label>
+		<input type="text" id="out-identity"><br>
+
+		<label for="out-vehicleType">Vehicle Type</label>
+		<input type="text" id="out-vehicleType"><br>
+
+		<label for="out-vehicles">Vehicles (commas between)</label>
+		<input type="text" id="out-vehicles">
+
+		<hr>
+
+		<label for="out-departureTimePlanned">Planned Departure</label>
+		<input type="text" id="out-departureTimePlanned"><br>
+
+		<label for="out-arrivalTimePlanned">Planned Arrival</label>
+		<input type="text" id="out-arrivalTimePlanned">
+
+		<hr>
+
+		<label for="out-notes">Notes</label>
+		<textarea id="out-notes" rows="5" style="width: 100%; height: 4em;"></textarea>
+
+		<hr>
+
+		<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+			<button onclick="startOverConf();"><span class="emoji-icon">❌</span> Start Over</button>
+			
+			<button onclick="addNew();" id="save-button" style="display: none;"><span class="emoji-icon">💾</span> Save this Journey</button>
+			<button onclick="editExisting();" id="edit-button" style="display: none;"><span class="emoji-icon">✏️</span> Edit this Journey</button>
+
+		</div>
+	</section>
+
+	<script src="js/0common.js"></script>
+	<script src="js/addedit.js"></script>
+</body>
+</html>

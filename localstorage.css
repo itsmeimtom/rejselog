@@ -1,0 +1,15 @@
+ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ol li {
+	margin: 1em 0;
+	padding: 0.5em;
+	border: 1px solid #000;
+}
+
+ol li p span {
+	border: 1px solid #000;
+}
