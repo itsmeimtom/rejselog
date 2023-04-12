@@ -30,6 +30,10 @@
 		<span class="emoji-icon">☁️</span> Load from Server
 	</button>
 
+	<button onclick="clearLocalStorage()">
+		<span class="emoji-icon">🗑️</span> Clear localStorage
+	</button>
+
 	<br><br>
 
 	<button onclick="exportJSON()"">
@@ -78,6 +82,13 @@
 				<p>Note: <i>${j.notes ? j.notes : "Unset"}</i></p>
 			</li>
 			`;
+		}
+
+		function clearLocalStorage() {
+			if(!confirm("Are you sure you want to clear everything?")) return;
+
+			localStorage.clear();
+			alert("localStorage cleared");
 		}
 
 		// thanks again, copilot
