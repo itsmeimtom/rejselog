@@ -29,7 +29,7 @@ function stepFourShowDetails() {
 		`);
 	}
 
-	journey.distanceKm = (runningDist / 1000).toFixed(3);
+	journey.distanceKm = runningDist / 1000;
 
 	// set some info
 	journey.vehicleType = getServiceVehicle(journey.type);
@@ -49,12 +49,15 @@ function stepFourShowDetails() {
 	console.log(hours);
 	
 	// if 23 and 00 are in in the array
-	if (hours.includes("23") && hours.includes("00")) alert("This journey appears to span midnight. Please check the dates are correct.");
+	if (hours.includes("23") && hours.includes("00")) {
+		alert("This journey appears to span midnight. Please check the dates are correct.");
 
-	// update the arrival dates
-	if (journey.arrivalTimePlanned) journey.arrivalTimePlanned = nextDay(journey.arrivalTimePlanned);
-	if (journey.arrivalTimeActual) journey.arrivalTimeActual = nextDay(journey.arrivalTimeActual);
+		// update the arrival dates
+		if (journey.arrivalTimePlanned) journey.arrivalTimePlanned = nextDay(journey.arrivalTimePlanned);
+		if (journey.arrivalTimeActual) journey.arrivalTimeActual = nextDay(journey.arrivalTimeActual);
+	}
 
+	
 	// show the details
 	document.getElementById("out-origin").value = journey.origin;
 	document.getElementById("out-destination").value = journey.destination;
@@ -71,7 +74,7 @@ function stepFourShowDetails() {
 	document.getElementById("out-operatorName").value = journey.operatorName ? journey.operatorName : "SET ME!";
 	document.getElementById("out-identity").value = journey.identity;
 	document.getElementById("out-vehicleType").value = journey.vehicleType;
-	document.getElementById("out-vehicles").value = journey.vehicles.join(",");
+	document.getElementById("out-vehicles").value = journey.vehicles;
 
 	document.getElementById("out-departureTimePlanned").value = journey.departureTimePlanned;
 	document.getElementById("out-arrivalTimePlanned").value = journey.arrivalTimePlanned;
@@ -139,6 +142,26 @@ function setNow() {
 }
 
 function saveJourney() {
+	if (!journey.departureTimeActual) return alert("Please set the actual departure time.");
+	if (!journey.arrivalTimeActual) return alert("Please set the actual arrival time.");
+	if (!journey.operatorName || journey.operatorName == "SET ME!") return alert("Please set the operator name.");
+
+	if(journey.vehicles.length < 2) {
+		if (!confirm("You have not entered any vehicles.\nOK to ignore, cancel to return.")) return;
+	};
+
+	for(const e of document.querySelectorAll("#step-4 input")) {
+		if (e.value == "SET ME!") return alert("Please set all the fields marked 'SET ME!'");
+		if (e.value.includes("undefined")) return alert("Please check all the fields, there are some undefined values.");
+	}
+
+	// check dates
+	for (const id of ["departureTimeActual", "arrivalTimeActual", "departureTimePlanned", "arrivalTimePlanned"]) {
+		// if doesnt match the regex (holy crap copilot generated this regex without any prompting)
+		if (!journey[id].match(/^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/)) return alert(`Please check the ${id} date format. It should be DD.MM.YYYY HH:MM`);
+	}
+
+
 	if (!localStorage.getItem("journeys")) {
 		localStorage.setItem("journeys", JSON.stringify([]));
 	}
@@ -147,6 +170,11 @@ function saveJourney() {
 	
 	journeys.push(journey);
 	localStorage.setItem("journeys", JSON.stringify(journeys));
+
+	alert("Saved! Taking you to the list of journeys...");
+	document.getElementById("step-4").style["pointer-events"] = "none";
+	document.getElementById("step-4").style["opacity"] = "0.5";
+	location.href = "localstorage.html";
 }
 
 

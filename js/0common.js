@@ -27,7 +27,7 @@ let journey = {
 
 	"vehicleType": undefined, // We will use words (Train, Metro) but RM uses letters
 
-	"vehicles": [], // RM: vehicles - a list of units/vehicles used
+	"vehicles": "", // RM: vehicles - a list of units/vehicles used
 
 	"notes": undefined, // RM: notes - notes about the journey - we will put extra info and disclaimers here
 
