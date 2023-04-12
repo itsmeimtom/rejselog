@@ -46,9 +46,14 @@ function stepFourShowDetails() {
 	if (journey.arrivalTimePlanned) hours.push(journey.arrivalTimePlanned.split(" ")[1].split(":")[0]);
 	if (journey.departureTimeActual) hours.push(journey.departureTimeActual.split(" ")[1].split(":")[0]);
 	if (journey.arrivalTimeActual) hours.push(journey.arrivalTimeActual.split(" ")[1].split(":")[0]);
+	console.log(hours);
 	
 	// if 23 and 00 are in in the array
 	if (hours.includes("23") && hours.includes("00")) alert("This journey appears to span midnight. Please check the dates are correct.");
+
+	// update the arrival dates
+	if (journey.arrivalTimePlanned) journey.arrivalTimePlanned = nextDay(journey.arrivalTimePlanned);
+	if (journey.arrivalTimeActual) journey.arrivalTimeActual = nextDay(journey.arrivalTimeActual);
 
 	// show the details
 	document.getElementById("out-origin").value = journey.origin;
@@ -142,6 +147,66 @@ function saveJourney() {
 	
 	journeys.push(journey);
 	localStorage.setItem("journeys", JSON.stringify(journeys));
+}
+
+
+function nextDay(dateStr) {
+	console.log("dateStr", dateStr);
+
+	let dayOfMonth = parseInt(dateStr.split(" ")[0].split(".")[0]);
+	let month = parseInt(dateStr.split(" ")[0].split(".")[1]);
+	let year = parseInt(dateStr.split(" ")[0].split(".")[2]);
+	const time = dateStr.split(" ")[1];
+
+	console.log(dayOfMonth, month, year, time);
+
+	// spaghetti code, thank you copilot xo
+	if ([1, 3, 5, 7, 8, 10, 12].includes(month)) { // months with 31 days
+		console.log("month with 31 days");
+
+		if(dayOfMonth == 31) {
+			console.log("last day of month");
+			dayOfMonth = "01";
+			month = month + 1;
+		} else {
+			dayOfMonth = dayOfMonth + 1;
+		}
+	} else if ([4, 6, 9, 11].includes(month)) { // 30 days
+		console.log("month with 30 days");
+		if(dayOfMonth == 30) {
+			console.log("last day of month");
+			dayOfMonth = "01";
+			month = month + 1;
+		} else {
+			dayOfMonth = dayOfMonth + 1;
+		}
+	} else if (month == 2) {
+		console.log("february");
+		// leap year
+		if (new Date(year, 1, 29).getDate() === 29) {
+			console.log("leap year");
+			if(dayOfMonth == 29) {
+				console.log("last day of month");
+				dayOfMonth = "01";
+				month = "03";
+			} else {
+				dayOfMonth = dayOfMonth + 1;
+			}
+		} else {
+			console.log("not leap year");
+			if(dayOfMonth == 28) {
+				console.log("last day of month");
+				dayOfMonth = "01";
+				month = "03";
+			} else {
+				dayOfMonth = dayOfMonth + 1;
+			}
+		}
+	}
+
+	const nextDay = `${dayOfMonth.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}.${year} ${time}`;
+	console.log(nextDay);
+	return nextDay;
 }
 
 
