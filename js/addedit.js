@@ -3,7 +3,8 @@ let operation = undefined;
 
 let params = new URLSearchParams(document.location.search);
 
-
+// what a mess...
+// todo: clean up a lot
 if(params.get("operation") == "add") {
 	operation = "add";
 
