@@ -35,7 +35,7 @@ function getEmoji(code) {
 		case "M": return emojiIconString("Ⓜ️");
 		case "LET": return emojiIconString("🚃");
 		case "TOG": return emojiIconString("🚆");
-
+		case "EN": return emojiIconString("🌙");
 	}
 }
 
@@ -52,7 +52,9 @@ function getServiceType(code) {
 		case "S": return "S-tog";
 		case "M": return "Københavns Metro";
 		case "LET": return "Letbane";
+		case "EN": return "EuroNight";
 		case "TOG": return "Other Train";
+		
 	}
 
 	return "Unknown";
@@ -66,6 +68,7 @@ function getServiceVehicle(code) {
 		|| code === "REG"
 		|| code === "S"
 		|| code === "TOG"
+		|| code === "EN"
 	) return "Train";
 
 	if (code === "M" || code === "LET") return "Metro";
