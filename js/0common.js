@@ -1,29 +1,49 @@
 const endpoint = "https://xmlopen.rejseplanen.dk/bin/rest.exe/";
 
-let globalStation = {
-	"name": undefined,
-	"id": undefined,
-	"date": undefined,
-	"time": undefined,
-	"x": undefined,
-	"y": undefined
-};
+let journey = {
+	// these are used for RailMiles
 
-let globalTrain = {
-	"name": undefined,
-	"type": undefined,
-	"time": undefined,
-	"date": undefined,
-	"direction": undefined,
-	"finalStop": undefined,
-	"track": undefined,
-	"journeyDetailUrl": undefined,
-	"stops": [],
-	"startStationIndex": undefined,
-	"endStationIndex": undefined,
-	"distMiles": undefined,
-	"distChains": undefined,
-	"distKm": undefined
+	"origin": undefined, // RM: origin_name - Origin station name
+	"destination": undefined, // RM: destination_name - Destination station name
+	
+	"originTZ": undefined, // RM: origin_tz - Origin timezone
+	"destinationTZ": undefined, // RM: destination_tz - Destination timezone
+
+	"originPlatform": undefined, // RM: origin_platform - Origin platform
+	"destinationPlatform": undefined, // RM: destination_platform - Destination platform
+
+	"departureTimeActual": undefined, // RM: time_departure_act - Actual departure time
+	"departureTimePlanned": undefined, // RM: time_departure_plan - Planned departure time
+
+	"arrivalTimeActual": undefined, // RM: time_arrival_act - Actual arrival time
+	"arrivalTimePlanned": undefined, // RM: time_arrival_plan - Planned arrival time
+
+	"operatorName": undefined, // RM: operator_name - Operator name
+
+	"distanceKm": undefined, // RailMiles stores distance in miles, but we will use KM. Importing/sending to RM can handle conversion.
+
+	"route": undefined, // RM: route - here we use the "Direction" of the train, which sometimes is different from the destination
+	"identity" : undefined, // RM: identity - this will be the train "name" - eg IC 1234
+
+	"vehicleType": undefined, // We will use words (Train, Metro) but RM uses letters
+
+	"vehicles": [], // RM: vehicles - a list of units/vehicles used
+
+	"notes": undefined, // RM: notes - notes about the journey - we will put extra info and disclaimers here
+
+
+	// these details are not for RailMiles
+	"originId": undefined, // Origin Station ID, used for interacting with Rejseplanen
+	"originX": undefined, // Origin Station X coordinate
+	"originY": undefined, // Origin Station Y coordinate
+	"RJdate": undefined, // Date of journey, as listed in Rejseplanen
+	"RJtime": undefined, // Time of journey, as listed in Rejseplanen
+	"type": undefined, // Type of service, eg IC, LYN, S
+	"stops": [], // List of stops the service makes
+	"startStationIndex": undefined, // Index of the origin station in the stops array
+	"endStationIndex": undefined, // Index of the destination station in the stops array
+	"finalStop": undefined, // Final stop of the service (what would be shown on a destination blind)
+	"journeyDetailUrl": undefined // URL to the Rejseplanen journey details page, needed for getting service info
 };
 
 function getEmoji(code) {
@@ -85,7 +105,17 @@ function getServiceOperator(code) {
 		case "LYN": return "DSB";
 	}
 
-	return "Could be: DSB, Arriva, SJ or Oresundstag";
+	if(code === "LET") {
+		if(journey.origin.toLowerCase().includes("odense")) {
+			return "Odense Letbane";
+		} else if (journey.origin.toLowerCase().includes("aarhus")) {
+			return "Aarhus Letbane";
+		}
+	} else {
+		return undefined;
+	}
+
+	return undefined;
 }
 
 // function getServiceTrainType(code) {

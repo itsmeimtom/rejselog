@@ -35,6 +35,11 @@ input:focus {
 	border: 1px solid #00f;
 }
 
+input[readonly] {
+	opacity: 0.8;
+	font-style: italic;
+}
+
 section {
 	background-color: #eee;
 	border: 1px solid #000;

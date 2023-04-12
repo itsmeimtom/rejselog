@@ -26,14 +26,15 @@
 		for(const j of journeys) {
 			out.innerHTML += `
 			<li>
-				<h2>${j.origin} (${j.originTrack?j.originTrack:"?"}) to ${j.destination} (${j.destinationTrack?j.destinationTrack:"?"})</h2>
-				<p>Departing ${j.depDate} ${j.depTime}</p>
-				<p>Arriving ${j.arrDate} ${j.arrTime}</p>
-				<p>${j.distanceMiles} miles and ${j.distanceChains} chains</p>
-				<p>Dir: ${j.direction}</p>
-				<p>${j.name} (${j.type})</p>
-				<p>${j.operator}</p>
-				<p>Note: <i>${j.note}</i></p>
+				<h2>${j.origin} (${j.originPlatform?j.originPlatform:"?"}) to ${j.destination} (${j.destinationPlatform?j.destinationPlatform:"?"})</h2>
+				<p>Departing ${j.departureTimeActual} (planned ${j.departureTimePlanned})</p>
+				<p>Arriving ${j.arrivalTimeActual} (planned ${j.arrivalTimePlanned})</p>
+				<p>${j.distanceKm} Kilometres</p>
+				<p>${j.route}</p>
+				<p>${j.identity} (${j.vehicleType})</p>
+				<p>${j.operatorName}</p>
+				<p>Traction: ${j.vehicles.join(' ')}</p>
+				<p>Note: <i>${j.notes}</i></p>
 			</li>
 			`;
 		}

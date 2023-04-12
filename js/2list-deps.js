@@ -8,16 +8,15 @@ metroToggle.addEventListener("change", () => {
 
 
 async function stepTwoListDeps() {
-	if(!globalStation.id) return alert("No station ID?");
-	if(!globalStation.date) return alert("No date?");
-	if(!globalStation.time) return alert("No time?");
+	if (!journey.originId) return alert("Have you selected a station? If so, please try again. If this error persists, please let me know.");
+	if (!journey.RJdate || !journey.RJtime) return alert("Please select a date and time. You can refresh the page to set the date and time to now.");
 
 	// date as DD.MM.YYYY
-	const dateParts = globalStation.date.split("-");
+	const dateParts = journey.RJdate.split("-");
 	const dateFormatted = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
 
 	// time as HH:MM
-	const time = globalStation.time.split(":");
+	const time = journey.RJtime.split(":");
 	const timeFormatted = `${time[0]}:${time[1]}`;
 
 
@@ -36,7 +35,7 @@ async function stepTwoListDeps() {
 		dateUrl = `&date=${dateFormatted}&time=${timeFormatted}`;
 	}
 
-	const url = endpoint + `departureBoard?id=${globalStation.id}&useTog=${tog}&useMetro=${metro}&useBus=0${dateUrl}&format=json`;
+	const url = endpoint + `departureBoard?id=${journey.originId}&useTog=${tog}&useMetro=${metro}&useBus=0${dateUrl}&format=json`;
 
 	const response = await fetch(url);
 	const data = await response.json();
@@ -50,9 +49,10 @@ async function stepTwoListDeps() {
 
 	if (data.DepartureBoard.Departure.length > 0) {
 		data.DepartureBoard.Departure.forEach((service) => {
+			// set departure station details in the status bar and hide the station selection
 			document.getElementById("step-1").style.display = "none";
 			document.getElementById("step-1-strip").style.display = "flex";
-			document.getElementById("departure-station-name").innerHTML = globalStation.name;
+			document.getElementById("departure-station-name").innerHTML = journey.origin;
 			if(metroToggle.checked) {
 				document.getElementById("departure-station-date").innerHTML = "Now";
 			} else {
@@ -65,24 +65,28 @@ async function stepTwoListDeps() {
 			let cancelled = "";
 			if(service.cancelled) cancelled = " cancelled";
 
+
+			let track = "";
+			if(service.track) track = service.track; // planned track
+			if(service.rtTrack) track = service.rtTrack; // 'realtime' track (not sure if this is included here but just in case)
+
 			serviceList.innerHTML += `
 				<li onclick="
-					globalTrain.name = '${service.name}';
-					globalTrain.type = '${service.type}';
-					globalTrain.time = '${service.time}';
-					globalTrain.date = '${dateFormatted}';
-					globalTrain.direction = '${service.direction}';
-					globalTrain.finalStop = '${service.finalStop}';
-					globalTrain.journeyDetailUrl = '${btoa(service.JourneyDetailRef.ref)}';
-					globalTrain.track = ${service.track};
-
+					journey.identity = '${service.name}';
+					journey.type = '${service.type}';
+					journey.originPlatform = '${track}';
+					journey.RJtime = '${service.time}';
+					journey.RJdate = '${dateFormatted}';
+					journey.route = '${service.direction}';
+					journey.destination = '${service.finalStop}';
+					journey.journeyDetailUrl = '${btoa(service.JourneyDetailRef.ref)}';
 					stepThreeShowService();
 				" class="service${cancelled}">
 					<span class="service-name">${getEmoji(service.type)} ${service.name}</span>
 
 					<span class="service-time">${service.time}</span>
 
-					<span class="service-track">${service.track ? `&bull; Track ${service.track}` : " "}</span>
+					<span class="service-track">${service.track ? `&bull; Track ${track}` : " "}</span>
 					
 					<span class="service-dest">${service.finalStop}${extra}</span>
 				</li>

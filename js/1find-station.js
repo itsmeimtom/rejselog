@@ -40,12 +40,12 @@ async function stepOneListMatches(name) {
 		data.LocationList.StopLocation.forEach((stop) => {
 			stationList.innerHTML += `
 				<li onclick="
-					globalStation.id = '${stop.id}';
-					globalStation.name = '${stop.name}';
-					globalStation.date = '${date.value.split("T")[0]}';
-					globalStation.time = '${date.value.split("T")[1]}';
-					globalStation.x = ${stop.x};
-					globalStation.y = ${stop.y};
+					journey.originId = '${stop.id}';
+					journey.origin = '${stop.name}';
+					journey.RJdate = '${date.value.split("T")[0]}';
+					journey.RJtime = '${date.value.split("T")[1]}';
+					journey.originX = ${stop.x};
+					journey.originY = ${stop.y};
 					stepTwoListDeps();
 				">${stop.name}</li>
 			`;

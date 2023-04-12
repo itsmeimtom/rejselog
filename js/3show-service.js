@@ -1,7 +1,7 @@
 const stopList = document.getElementById("stop-list");
 
 async function stepThreeShowService() {
-	if (globalTrain.type === "LET" && !globalStation.name.toLowerCase().includes("letbane")) {
+	if (journey.type === "LET" && !journey.origin.toLowerCase().includes("letbane")) {
 		if (confirm(
 			`This is Letbane (light rail) service, but the station you have selected does not appear to be a Letbane stop.\nYou will likely run into problems.\n\nOK to continue anyway, cancel to start over and pick a new origin station.`
 		)) {
@@ -11,7 +11,7 @@ async function stepThreeShowService() {
 		}
 	}
 
-	if(globalTrain.type === "M" && !globalStation.name.toLowerCase().includes("metro")) {
+	if(journey.type === "M" && !journey.origin.toLowerCase().includes("metro")) {
 		if (confirm(
 			`This is Metro service, but the station you have selected does not appear to be a Metro stop.\nYou will likely run into problems.\n\nOK to continue anyway, cancel to start over and pick a new origin station.`
 		)) {
@@ -21,16 +21,16 @@ async function stepThreeShowService() {
 		}
 	}
 
-	if (!globalTrain.journeyDetailUrl) return alert("API Error: No URL was provided. Please try again. If this error persists, please let me know.");
+	if (!journey.journeyDetailUrl) return alert("API Error: No URL was provided. Please try again. If this error persists, please let me know.");
 
 	// Replace the second ? with & (https://stackoverflow.com/a/44568739)
 	// and swap the endpoint
 	let t = 0;
-	const fixedUrl = decodeURIComponent(atob(globalTrain.journeyDetailUrl))
+	const fixedUrl = decodeURIComponent(atob(journey.journeyDetailUrl))
 		.replace(/\?/g, match => ++t === 2 ? '&' : match) 
 		.replace("http://webapp.rejseplanen.dk/bin//rest.exe/", endpoint); 
 
-	if (!fixedUrl.startsWith(endpoint)) return alert(`Given URL (${atob(globalTrain.journeyDetailUrl)}) does not start with ${endpoint}`);
+	if (!fixedUrl.startsWith(endpoint)) return alert(`Given URL (${atob(journey.journeyDetailUrl)}) does not start with ${endpoint}`);
 
 	const url = fixedUrl + "&format=json";
 	const response = await fetch(url);
@@ -40,12 +40,12 @@ async function stepThreeShowService() {
 
 	if (data.JourneyDetail.error) return alert(`API Returned Error: \n\n${data.JourneyDetail.error}`); 
 
-	document.getElementById("service-name").innerHTML = globalTrain.name;
-	document.getElementById("service-type").innerHTML = `${getEmoji(globalTrain.type)} ${getServiceType(globalTrain.type)}`;
-	document.getElementById("service-time").innerHTML = globalTrain.time;
-	document.getElementById("service-dest").innerHTML = globalTrain.finalStop;
-	document.getElementById("service-via").innerHTML = globalTrain.direction;
-	document.getElementById("service-track").innerHTML = `Track ${globalTrain.track?globalTrain.track:"?"}`;
+	document.getElementById("service-name").innerHTML = journey.identity;
+	document.getElementById("service-type").innerHTML = `${getEmoji(journey.type)} ${getServiceType(journey.type)}`;
+	document.getElementById("service-time").innerHTML = journey.RJtime;
+	document.getElementById("service-dest").innerHTML = journey.destination;
+	document.getElementById("service-via").innerHTML = journey.route;
+	document.getElementById("service-track").innerHTML = `Track ${journey.originPlatform ? journey.originPlatform : "?"}`;
 
 	document.getElementById("step-3").style.display = "block";
 	document.getElementById("step-2").style.display = "none";
@@ -61,10 +61,10 @@ async function stepThreeShowService() {
 		for(const i in data.JourneyDetail.Stop) {
 			const s = data.JourneyDetail.Stop[i];
 
-			console.log(s.name, globalStation.name);
-			if (s.name === globalStation.name) {
+			console.log(s.name, journey.origin);
+			if (s.name.toLowerCase() === journey.origin.toLowerCase()) {
 				console.log("MATCH");
-				globalTrain.startStationIndex = parseInt(i);
+				journey.startStationIndex = parseInt(i);
 				break;
 			} else {
 				console.log("NO MATCH");
@@ -72,11 +72,11 @@ async function stepThreeShowService() {
 		}
 
 		data.JourneyDetail.Stop.forEach((stop) => {
-			globalTrain.stops.push(
+			journey.stops.push(
 				{
 					name: stop.name,
 					arrTime: stop.arrTime ? stop.arrTime : undefined,
-					depTime: stop.depTime ? stop.depTime : undefined,
+					depTime: stop.arrTime ? stop.depTime : undefined,
 					x: stop.x ? stop.x : undefined,
 					y: stop.y ? stop.y : undefined
 				}
@@ -86,19 +86,19 @@ async function stepThreeShowService() {
 
 			// if (!stop.arrTime) return;
 
-			let onclick = `globalTrain.endStationIndex = ${stopIndex}; stepFourShowDetails();`;
+			let onclick = `journey.endStationIndex = ${stopIndex}; stepFourShowDetails();`;
 			let style = "";
 
-			console.log(stopIndex, globalTrain.startStationIndex);
+			console.log(stopIndex, journey.startStationIndex);
 
-			if(stopIndex <= globalTrain.startStationIndex) {
+			if (stopIndex <= journey.startStationIndex) {
 				onclick = "alert('You have started after this stop!');";
 				style = "style='opacity: 0.5; font-size: 0.8em; padding: 0 0.5em;'";
 			}
 				
 			stopList.innerHTML += `
 				<li onclick="${onclick}" ${style}>
-					<b>${stop.name}</b>, arriving ${stop.arrTime ? stop.arrTime : "?"}
+					<b>${stop.name}</b>${stop.arrTime ? `, arr. ${stop.arrTime}` : ""}
 				</li>
 			`;
 		});

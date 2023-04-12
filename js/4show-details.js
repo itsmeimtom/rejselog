@@ -1,17 +1,18 @@
 function stepFourShowDetails() {
 
-	if (typeof(globalTrain.startStationIndex) !== "number") alert("Couldn't find a start station!\nYou will need to reload and try again. Sorry!\n\nThis is likely because you are viewing a Letbane service but have selected a station that is not a Letbane stop.");
-	if (typeof(globalTrain.endStationIndex) !== "number") alert("Couldn't find an end station!\nYou will need to reload and try again. Sorry!\n\nThis is likely a bug, please let me know and I\'ll investigate.");
+	if (typeof(journey.startStationIndex) !== "number") alert("Couldn't find a start station!\nYou will need to reload and try again. Sorry!\n\nThis is likely because you are viewing a Letbane service but have selected a station that is not a Letbane stop.");
+	if (typeof(journey.endStationIndex) !== "number") alert("Couldn't find an end station!\nYou will need to reload and try again. Sorry!\n\nThis is likely a bug, please let me know and I\'ll investigate.");
 
 	console.log(`
-		starting at ${globalTrain.stops[globalTrain.startStationIndex].name} (${globalTrain.startStationIndex}),
-		ending at ${globalTrain.stops[globalTrain.endStationIndex].name} (${globalTrain.endStationIndex})
+		starting at ${journey.stops[journey.startStationIndex].name} (${journey.startStationIndex}),
+		ending at ${journey.stops[journey.endStationIndex].name} (${journey.endStationIndex})
 	`);
+	journey.origin = journey.stops[journey.startStationIndex].name;
 
 	let runningDist = 0;
-	for(let i = globalTrain.startStationIndex; i < globalTrain.endStationIndex; i++) {
-		const currentStop = globalTrain.stops[i];
-		const nextStop = globalTrain.stops[i+1];
+	for (let i = journey.startStationIndex; i < journey.endStationIndex; i++) {
+		const currentStop = journey.stops[i];
+		const nextStop = journey.stops[i+1];
 
 		const lat1 = currentStop.y / 1000000;
 		const lon1 = currentStop.x / 1000000;
@@ -28,81 +29,88 @@ function stepFourShowDetails() {
 		`);
 	}
 
-	globalTrain.distMiles = convertToMilesAndChains(runningDist)[0];
-	globalTrain.distChains = convertToMilesAndChains(runningDist)[1];
-	globalTrain.distKm = (runningDist / 1000).toFixed(3);
+	journey.distanceKm = (runningDist / 1000).toFixed(3);
 
-	document.getElementById("details-output").innerHTML = `
-	
-	<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-		<div>
-			<h2>Origin</h2>
-			<p><b>${globalStation.name}</b>, Track ${globalTrain.track?globalTrain.track:'?'}</p>
-			<p>${globalTrain.date}, ${globalTrain.stops[0].depTime}</p>
-		</div>
+	// set some info
+	journey.vehicleType = getServiceVehicle(journey.type);
+	journey.operatorName = getServiceOperator(journey.type);
 
-		<div>
-			<h2>Destination</h2>
-			<p><b>${globalTrain.stops[globalTrain.endStationIndex].name}</b></p>
-			<p>${globalTrain.date}, ${globalTrain.stops[globalTrain.endStationIndex].arrTime}</p>
-		</div>
-	</div>
+	if (!journey.departureTimePlanned) journey.departureTimePlanned = `${journey.RJdate} ${journey.stops[journey.startStationIndex].depTime ? journey.stops[journey.startStationIndex].depTime : journey.RJtime}`;
+	if (!journey.arrivalTimePlanned) journey.arrivalTimePlanned = `${journey.RJdate} ${journey.stops[journey.endStationIndex].arrTime}`;
 
-	<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-		<div>
-			<h2>Route &amp; Distance</h2>
-			<p>${globalTrain.direction}</p>
-			<p>
-				${globalTrain.distMiles} miles and ${globalTrain.distChains} chains<br>
-				(${globalTrain.distKm} km)
-			</p>
-		</div>
+	journey.notes = `This journey was created by go.TomR.me/rjl\nDistances are approximate, calculated as-the-crow-flies between stations. Info may not be complete or accurate.`;
 
-		<div>
-			<h2>Operator &amp; Running Info</h2>
-			<p>${getServiceOperator(globalTrain.type)}</p>
-			<p>${getServiceType(globalTrain.type)} <b>${globalTrain.name}</b></p>
-			<p>${getServiceVehicle(globalTrain.type)}</p>
-		</div>
-	</div>
+	// show the details
+	document.getElementById("out-origin").value = journey.origin;
+	document.getElementById("out-destination").value = journey.destination;
 
-	<h2>Traction</h2>
-	<p>todo</p>
+	document.getElementById("out-originPlatform").value = journey.originPlatform ? journey.originPlatform : "";
+	document.getElementById("out-destinationPlatform").value = journey.destinationPlatform ? journey.destinationPlatform : "";
 
+	document.getElementById("out-departureTimeActual").value = journey.departureTimeActual ? journey.departureTimeActual : "SET ME!";
+	document.getElementById("out-arrivalTimeActual").value = journey.arrivalTimeActual ? journey.arrivalTimeActual : "SET ME!";
 
-	<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-		<div>
-			<h2>Planned Dep</h2>
-			<p>todo</p>
-		</div>
+	document.getElementById("out-distanceKm").value = journey.distanceKm;
+	document.getElementById("out-route").value = journey.route;
 
-		<div>
-			<h2>Planned Arr</h2>
-			<p>todo</p>
-		</div>
-	</div>
+	document.getElementById("out-operatorName").value = journey.operatorName ? journey.operatorName : "SET ME!";
+	document.getElementById("out-identity").value = journey.identity;
+	document.getElementById("out-vehicleType").value = journey.vehicleType;
+	document.getElementById("out-vehicles").value = journey.vehicles.join(",");
 
-	<h2>Notes</h2>
-	<p>Distances are approx, calcualted as-the-crow-flies between stations. Info may not be complete or accurate.</p>
+	document.getElementById("out-departureTimePlanned").value = journey.departureTimePlanned;
+	document.getElementById("out-arrivalTimePlanned").value = journey.arrivalTimePlanned;
 
-	<div style="display: flex; justify-content: space-between; align-items: flex-start;">
-		<button onclick="startOverConf();">${emojiIconString("❌")} Start Over</button>
-		<button onclick="saveJourney();">${emojiIconString("💾")} Save this Journey</button>
-	</div>
- 	`;
+	document.getElementById("out-notes").value = journey.notes;
+
 
 	document.getElementById("step-1").style.display = "none";
 	// document.getElementById("step-1-strip").style.display = "none";
 	document.getElementById("step-2").style.display = "none";
 	// document.getElementById("step-2-strip").style.display = "none";
 	document.getElementById("step-3").style.display = "none";
-	document.getElementById("step-4").style.display = "block";	
+	document.getElementById("step-4").style.display = "block";
+
+
+	// set up updating onchange
+	for(const e of document.querySelectorAll("#step-4 input")) {
+		e.addEventListener("change", () => {
+			console.log("changed", e.id);
+			console.log("before journey", journey);
+			journey[e.id.replace("out-", "")] = e.value;
+			console.log("after journey", journey);
+		});
+	}
+
+	document.getElementById("out-notes").addEventListener("change", () => {
+		console.log("changed", e.id);
+		console.log("before journey", journey);
+		journey.notes = document.getElementById("out-notes").value;
+		console.log("after journey", journey);
+	});
 }
 
 function startOverConf() {
 	if(confirm("Are you sure you want to start over?")) {
 		location.reload();
+	} else {
+		// do nothing
 	}
+}
+
+function setActual(which) {
+	switch(which) {
+		case "dep":
+			journey.departureTimeActual = journey.departureTimePlanned;
+			break;
+		case "arr":
+			journey.arrivalTimeActual = journey.arrivalTimePlanned; journey.departureTimeActual = journey.departureTimePlanned;
+			break;
+		default:
+			alert("How did you get here?");
+	}
+
+	stepFourShowDetails();
 }
 
 function saveJourney() {
@@ -112,25 +120,7 @@ function saveJourney() {
 
 	const journeys = JSON.parse(localStorage.getItem("journeys"));
 	
-	journeys.push({
-		origin: globalStation.name,
-		originTrack: globalTrain.track,
-		destination: globalTrain.stops[globalTrain.endStationIndex].name,
-		destinationTrack: globalTrain.stops[globalTrain.endStationIndex].track,
-		depDate: globalTrain.date,
-		depTime: globalTrain.stops[0].depTime,
-		arrDate: globalTrain.date,
-		arrTime: globalTrain.stops[globalTrain.endStationIndex].arrTime,
-		direction: globalTrain.direction,
-		distanceMiles: globalTrain.distMiles,
-		distanceChains: globalTrain.distChains,
-		distanceKm: globalTrain.distKm,
-		operator: getServiceOperator(globalTrain.type),
-		type: getServiceType(globalTrain.type),
-		name: globalTrain.name,
-		vehicle: getServiceVehicle(globalTrain.type),
-		note: "Distances are approx, calcualted as-the-crow-flies between stations. Info may not be complete or accurate."
-	});
+	journeys.push(journey);
 	localStorage.setItem("journeys", JSON.stringify(journeys));
 }
 
@@ -153,19 +143,4 @@ function haversine(lat1, lon1, lat2, lon2) {
 
 	const d = R * c; // distance in meters
 	return d;
-}
-
-// thanks again, chatgpt :)
-// "could you please write a JavaScript function that converts
-// "a length in metres to the British railway standard of
-// "miles and chains?"
-function convertToMilesAndChains(lengthInMeters) {
-	const metersPerMile = 1609.344;
-	const metersPerChain = 20.1168;
-
-	const totalChains = lengthInMeters / metersPerChain;
-	const miles = Math.floor(totalChains / 80);
-	const chains = Math.round(totalChains % 80);
-
-	return [miles, chains];
 }
