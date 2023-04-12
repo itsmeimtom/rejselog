@@ -21,23 +21,28 @@ section {
 	padding: 1em;
 }
 
-section#step-1 div {
+section#step-1 div:not(#step-1-form) {
 	min-width: 30%;
 }
 
-section#step-1 form {
+section#step-1 div#step-1-form {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
 	align-items: center;
 }
 
-section#step-1 form label {
-	font-size: 0.8em;
+section#step-1 div#step-1-form label {
+	font-size: 0.8em;	
 }
 
-section#step-1 form input {
+section#step-1 div#step-1-form input {
 	width: calc(100% - 1em - 2px);
+}
+
+section#step-1 p {
+	text-align: center;
+	font-size: 0.8em;
 }
 
 /* general list styling */

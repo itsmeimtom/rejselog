@@ -47,6 +47,8 @@ let journey = {
 };
 
 function getEmoji(code) {
+	if(!code) return "";
+
 	switch (code.toUpperCase()) {
 		case "IC": return emojiIconString("🚅");
 		case "LYN": return emojiIconString("⚡");
@@ -65,6 +67,8 @@ function emojiIconString(emoji) {
 
 
 function getServiceType(code) {
+	if (!code) return "";
+
 	switch (code.toUpperCase()) {
 		case "IC": return "Intercity Train";
 		case "LYN": return "IntercityLyn (Limited-Stop Intercity)";
@@ -81,6 +85,8 @@ function getServiceType(code) {
 }
 
 function getServiceVehicle(code) {
+	if (!code) return "";
+
 	code = code.toUpperCase();
 	if (
 		code === "IC"
@@ -97,6 +103,7 @@ function getServiceVehicle(code) {
 }
 
 function getServiceOperator(code) {
+	if (!code) return "";
 	code = code.toUpperCase();
 
 	switch (code) {

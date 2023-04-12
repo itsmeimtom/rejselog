@@ -26,10 +26,10 @@
 	</header>
 
 	<section id="step-1">
-		<form>
+		<div id="step-1-form">
 			<div>
 				<label for="departure-station"><span class="emoji-icon">💨</span> Departure Station</label><br>
-				<input type="text" id="departure-station">
+				<input type="text" id="departure-station" placeholder="Type a station name here!">
 			</div>
 			
 			<span>&nbsp;</span>
@@ -38,9 +38,11 @@
 				<label for="date"><span class="emoji-icon">📅</span> Date &amp; Time</label><br>
 				<input type="datetime-local" id="date">
 			</div>
-		</form>
+		</div>
 	
 		<ul id="station-list"></ul>
+
+		<p>or <a href="javascript:stepFourShowDetails(true);">manually input a journey</a></p>
 	</section>
 
 	<section id="step-1-strip" style="display: none;">
@@ -83,7 +85,7 @@
 
 	<section id="step-4" style="display: none;">
 		<label for="out-origin">Origin</label>
-		<input type="text" id="out-origin" readonly>
+		<input type="text" id="out-origin">
 
 		&bull;
 
@@ -99,7 +101,7 @@
 		<hr>
 		
 		<label for="out-destination">Destination</label>
-		<input type="text" id="out-destination" readonly>
+		<input type="text" id="out-destination">
 
 		&bull;
 
@@ -115,10 +117,10 @@
 		<hr>
 
 		<label for="out-distanceKm">Distance Travelled (km)</label>
-		<input type="text" id="out-distanceKm" readonly> <br>
+		<input type="text" id="out-distanceKm"> <br>
 
 		<label for="out-route">Route (Direction)</label>
-		<input type="text" id="out-route" readonly>
+		<input type="text" id="out-route">
 
 		<hr>
 
@@ -126,10 +128,10 @@
 		<input type="text" id="out-operatorName"><br>
 
 		<label for="out-identity">Identity (name)</label>
-		<input type="text" id="out-identity" readonly><br>
+		<input type="text" id="out-identity"><br>
 
 		<label for="out-vehicleType">Vehicle Type</label>
-		<input type="text" id="out-vehicleType" readonly><br>
+		<input type="text" id="out-vehicleType"><br>
 
 		<label for="out-vehicles">Vehicles (commas between)</label>
 		<input type="text" id="out-vehicles">

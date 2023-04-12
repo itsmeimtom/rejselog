@@ -55,7 +55,7 @@ function stepFourShowDetails(force) {
 	if (!journey.departureTimePlanned) journey.departureTimePlanned = `${journey.RJdate} ${journey.stops[journey.startStationIndex].depTime ? journey.stops[journey.startStationIndex].depTime : journey.RJtime}`;
 	if (!journey.arrivalTimePlanned) journey.arrivalTimePlanned = `${journey.RJdate} ${journey.stops[journey.endStationIndex].arrTime}`;
 
-	journey.notes = `This journey was created by go.TomR.me/rjl\nDistances are approximate, calculated as-the-crow-flies between stations. Info may not be complete or accurate.`;
+	journey.notes = `This journey was created by go.TomR.me/rejselog\nDistances are approximate, calculated as-the-crow-flies between stations. Info may not be complete or accurate.`;
 
 	// check if journey spills into next day
 	let hours = [];
@@ -76,8 +76,8 @@ function stepFourShowDetails(force) {
 
 	
 	// show the details
-	document.getElementById("out-origin").value = journey.origin;
-	document.getElementById("out-destination").value = journey.destination;
+	document.getElementById("out-origin").value = journey.origin ? journey.origin : "SET ME!";
+	document.getElementById("out-destination").value = journey.destination ? journey.destination : "SET ME!";
 
 	document.getElementById("out-originPlatform").value = journey.originPlatform ? journey.originPlatform : "";
 	document.getElementById("out-destinationPlatform").value = journey.destinationPlatform ? journey.destinationPlatform : "";
@@ -85,16 +85,16 @@ function stepFourShowDetails(force) {
 	document.getElementById("out-departureTimeActual").value = journey.departureTimeActual ? journey.departureTimeActual : "SET ME!";
 	document.getElementById("out-arrivalTimeActual").value = journey.arrivalTimeActual ? journey.arrivalTimeActual : "SET ME!";
 
-	document.getElementById("out-distanceKm").value = journey.distanceKm;
-	document.getElementById("out-route").value = journey.route;
+	document.getElementById("out-distanceKm").value = journey.distanceKm ? journey.distanceKm : "SET ME!";
+	document.getElementById("out-route").value = journey.route ? journey.route : "SET ME!";
 
 	document.getElementById("out-operatorName").value = journey.operatorName ? journey.operatorName : "SET ME!";
-	document.getElementById("out-identity").value = journey.identity;
-	document.getElementById("out-vehicleType").value = journey.vehicleType;
+	document.getElementById("out-identity").value = journey.identity ? journey.identity : "SET ME!";
+	document.getElementById("out-vehicleType").value = journey.vehicleType ? journey.vehicleType : "SET ME!";
 	document.getElementById("out-vehicles").value = journey.vehicles;
 
-	document.getElementById("out-departureTimePlanned").value = journey.departureTimePlanned;
-	document.getElementById("out-arrivalTimePlanned").value = journey.arrivalTimePlanned;
+	document.getElementById("out-departureTimePlanned").value = journey.departureTimePlanned ? journey.departureTimePlanned : "SET ME!";
+	document.getElementById("out-arrivalTimePlanned").value = journey.arrivalTimePlanned ? journey.arrivalTimePlanned : "SET ME!";
 
 	document.getElementById("out-notes").value = journey.notes;
 
