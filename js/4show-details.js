@@ -1,6 +1,7 @@
-function stepFourShowDetails() {	
-	if (typeof(globalTrain.startStationIndex) !== "number") alert("Couldn't find a start station!\nIf you are using a local service check if the start stop name is correct - it might not match the name of a nearby DSB station.");
-	if (typeof(globalTrain.endStationIndex) !== "number") alert("No end station picked!");
+function stepFourShowDetails() {
+
+	if (typeof(globalTrain.startStationIndex) !== "number") alert("Couldn't find a start station!\nYou will need to reload and try again. Sorry!\n\nThis is likely because you are viewing a Letbane service but have selected a station that is not a Letbane stop.");
+	if (typeof(globalTrain.endStationIndex) !== "number") alert("Couldn't find an end station!\nYou will need to reload and try again. Sorry!\n\nThis is likely a bug, please let me know and I\'ll investigate.");
 
 	console.log(`
 		starting at ${globalTrain.stops[globalTrain.startStationIndex].name} (${globalTrain.startStationIndex}),
