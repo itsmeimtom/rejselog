@@ -6,8 +6,8 @@ let journey = {
 	"origin": undefined, // RM: origin_name - Origin station name
 	"destination": undefined, // RM: destination_name - Destination station name
 	
-	"originTZ": undefined, // RM: origin_tz - Origin timezone
-	"destinationTZ": undefined, // RM: destination_tz - Destination timezone
+	"originTZ": "Europe/Copenhagen", // RM: origin_tz - Origin timezone
+	"destinationTZ": "Europe/Copenhagen", // RM: destination_tz - Destination timezone
 
 	"originPlatform": undefined, // RM: origin_platform - Origin platform
 	"destinationPlatform": undefined, // RM: destination_platform - Destination platform
