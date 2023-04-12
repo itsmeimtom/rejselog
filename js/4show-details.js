@@ -140,7 +140,7 @@ function setActual(which) {
 			journey.departureTimeActual = journey.departureTimePlanned;
 			break;
 		case "arr":
-			journey.arrivalTimeActual = journey.arrivalTimePlanned; journey.departureTimeActual = journey.departureTimePlanned;
+			journey.arrivalTimeActual = journey.arrivalTimePlanned;
 			break;
 		default:
 			alert("How did you get here?");
