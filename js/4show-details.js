@@ -42,10 +42,10 @@ function stepFourShowDetails() {
 
 	// check if journey spills into next day
 	let hours = [];
-	hours.push(journey.departureTimePlanned.split(" ")[1].split(":")[0]);
-	hours.push(journey.arrivalTimePlanned.split(" ")[1].split(":")[0]);
-	hours.push(journey.departureTimeActual.split(" ")[1].split(":")[0]);
-	hours.push(journey.arrivalTimeActual.split(" ")[1].split(":")[0]);
+	if (journey.departureTimePlanned) hours.push(journey.departureTimePlanned.split(" ")[1].split(":")[0]);
+	if (journey.arrivalTimePlanned) hours.push(journey.arrivalTimePlanned.split(" ")[1].split(":")[0]);
+	if (journey.departureTimeActual) hours.push(journey.departureTimeActual.split(" ")[1].split(":")[0]);
+	if (journey.arrivalTimeActual) hours.push(journey.arrivalTimeActual.split(" ")[1].split(":")[0]);
 	
 	// if 23 and 00 are in in the array
 	if (hours.includes("23") && hours.includes("00")) alert("This journey appears to span midnight. Please check the dates are correct.");
@@ -80,25 +80,24 @@ function stepFourShowDetails() {
 	// document.getElementById("step-2-strip").style.display = "none";
 	document.getElementById("step-3").style.display = "none";
 	document.getElementById("step-4").style.display = "block";
+}
 
-
-	// set up updating onchange
-	for(const e of document.querySelectorAll("#step-4 input")) {
-		e.addEventListener("change", () => {
-			console.log("changed", e.id);
-			console.log("before journey", journey);
-			journey[e.id.replace("out-", "")] = e.value;
-			console.log("after journey", journey);
-		});
-	}
-
-	document.getElementById("out-notes").addEventListener("change", () => {
+// set up updating onchange
+for (const e of document.querySelectorAll("#step-4 input")) {
+	e.addEventListener("change", () => {
 		console.log("changed", e.id);
 		console.log("before journey", journey);
-		journey.notes = document.getElementById("out-notes").value;
+		journey[e.id.replace("out-", "")] = e.value;
 		console.log("after journey", journey);
 	});
 }
+
+document.getElementById("out-notes").addEventListener("change", () => {
+	console.log("changed", e.id);
+	console.log("before journey", journey);
+	journey.notes = document.getElementById("out-notes").value;
+	console.log("after journey", journey);
+});
 
 function startOverConf() {
 	if(confirm("Are you sure you want to start over?")) {
