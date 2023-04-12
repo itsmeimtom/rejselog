@@ -46,12 +46,12 @@ function emojiIconString(emoji) {
 
 function getServiceType(code) {
 	switch (code.toUpperCase()) {
-		case "IC": return "Intercity";
-		case "LYN": return "IntercityLyn";
-		case "REG": return "Regionaltog";
-		case "S": return "S-tog";
-		case "M": return "Københavns Metro";
-		case "LET": return "Letbane";
+		case "IC": return "Intercity Train";
+		case "LYN": return "IntercityLyn (Limited-Stop Intercity)";
+		case "REG": return "Regionaltog (Regional Train)";
+		case "S": return "S-tog (Suburban City Train)";
+		case "M": return "Københavns Metro (Copenhagen Metro)";
+		case "LET": return "Letbane (Local Light Rail)";
 		case "EN": return "EuroNight";
 		case "TOG": return "Other Train";
 		
