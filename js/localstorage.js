@@ -2,11 +2,11 @@
 
 const out = document.getElementById("out");
 
-if (!localStorage.getItem("journeys")) alert("Missing localStorage object");
+if (!localStorage.getItem("journeys")) return alert("You have never saved a journey before! There is nothing to load! (missing localStorage object)");
 
 const journeys = JSON.parse(localStorage.getItem("journeys"));
 
-if (journeys.length === 0) alert("No journeys");
+if (journeys.length === 0) alert("I couldn't find any journeys in localStorage! There is nothing to load! (journeys array is empty)");
 
 let index = 0;
 
@@ -50,13 +50,5 @@ function exportCSV() {
 }
 
 function importJSON() {
-	return alert("Not implemented yet. Sorry!");
-}
-
-function serverSave() {
-	return alert("Not implemented yet. Sorry!");
-}
-
-function serverLoad() {
 	return alert("Not implemented yet. Sorry!");
 }

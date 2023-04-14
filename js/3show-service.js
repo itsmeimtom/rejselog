@@ -33,7 +33,7 @@ async function stepThreeShowService() {
 		.replace(/\?/g, match => ++t === 2 ? '&' : match) 
 		.replace("http://webapp.rejseplanen.dk/bin//rest.exe/", endpoint); 
 
-	if (!fixedUrl.startsWith(endpoint)) return alert(`Given URL (${atob(journey.journeyDetailUrl)}) does not start with ${endpoint}`);
+	if (!fixedUrl.startsWith(endpoint)) return alert(`Something went wrong, this isn't your fault!\n\nGiven URL (${atob(journey.journeyDetailUrl)}) does not start with ${endpoint}`);
 
 	const url = fixedUrl + "&format=json";
 	const response = await fetch(url);
@@ -42,7 +42,7 @@ async function stepThreeShowService() {
 	console.log(data);
 
 	if (data.JourneyDetail.error) {
-		alert(`API Returned Error: \n\n${data.JourneyDetail.error}\n\nYou can start again or manually enter information in the next step.`);
+		alert(`Something went wrong with the API, this isn't your fault!\n\n${data.JourneyDetail.error}\n\nYou can start again or manually enter information in the next step.`);
 		return stepFourCalcDetails(true);
 	}
 

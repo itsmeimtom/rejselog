@@ -181,7 +181,7 @@ function addNew() {
 function editExisting() {
 	if (!validate()) return;
 
-	if (typeof(journeyIndex) !== "number") return alert("No journey index set!");
+	if (typeof(journeyIndex) !== "number") return alert("Not your fault, but no journey index was set!");
 
 	let journeys = JSON.parse(localStorage.getItem("journeys"));
 	journeys[journeyIndex] = journey;
@@ -191,7 +191,7 @@ function editExisting() {
 }
 
 function deleteExisting() {
-	if (typeof(journeyIndex) !== "number") return alert("No journey index set!");
+	if (typeof(journeyIndex) !== "number") return alert("Not your fault, but no journey index was set!");
 
 	if (!confirm(`Are you sure you want to delete journey ${journeyIndex} (${journey.origin} to ${journey.destination})?`)) return location.href = "localstorage.html";
 

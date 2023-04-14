@@ -44,7 +44,7 @@ async function stepTwoListDeps() {
 
 	console.log(data);
 
-	if(data.DepartureBoard.error) return alert(data.DepartureBoard.error);
+	if(data.DepartureBoard.error) return alert(`Something went wrong at the API end. Please try again later.\n\nError from Rejseplanen: ${data.DepartureBoard.error}`);
 
 	document.getElementById("step-2").style.display = "block";
 	serviceList.innerHTML = "";

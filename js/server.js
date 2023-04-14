@@ -27,7 +27,7 @@ function serverURL() {
 }
 
 async function saveToServer() {
-	if(!server) return alert("You have not set a server URL to save to!");
+	if(!server) return serverURL();
 	if (!confirm("Are you sure you want to save to the server? This will remove all journeys on the server and replace them with the ones listed on this page!\n\nOK to continue, cancel to abort")) return;
 
 	const req = await fetch(`${server}set.php`, {
@@ -49,7 +49,7 @@ async function saveToServer() {
 }
 
 async function loadFromServer() {
-	if (!server) return alert("You have not set a server URL to load from!");
+	if (!server) return serverURL();
 	if (!confirm("Are you sure you want to load from the server? This will overwrite any journeys that are only saved locally!\n\nOK to continue, cancel to abort")) return;
 
 	const req = await fetch(`${server}fetch.php`, {
