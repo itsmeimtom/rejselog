@@ -7,8 +7,8 @@ if (!localStorage.getItem("serverURL")) {
 	server = localStorage.getItem("serverURL");
 }
 
-function serverURL() {
-	let given = prompt("Please enter the URL of the server you want to use. Please include the trailing backslash.", "http://example.com/path/");
+function serverURL(noReload) {
+	let given = prompt("Please enter the URL of the server you want to use. Please include the trailing backslash.", `${server ? server : "http://example.com/path/"}`);
 
 	if (!given) return alert("No URL given! Nothing has changed.");
 
@@ -17,17 +17,20 @@ function serverURL() {
 		given += "/";
 	}
 
-
 	localStorage.setItem("serverURL", given);
 	server = given;
 
-	alert("Server URL set! Refreshing the page for you :)");
-
-	location.reload();
+	if(noReload) {
+		alert("Server URL set! Refreshing the page for you :)");
+		return location.reload();
+	} else {
+		alert("Server URL set!");
+		document.getElementById("server-url").innerText = server;
+	}
 }
 
 async function saveToServer() {
-	if(!server) return serverURL();
+	if(!server) serverURL();
 	if (!confirm("Are you sure you want to save to the server? This will remove all journeys on the server and replace them with the ones listed on this page!\n\nOK to continue, cancel to abort")) return;
 
 	const req = await fetch(`${server}set.php`, {
@@ -49,7 +52,7 @@ async function saveToServer() {
 }
 
 async function loadFromServer() {
-	if (!server) return serverURL();
+	if (!server) serverURL();
 	if (!confirm("Are you sure you want to load from the server? This will overwrite any journeys that are only saved locally!\n\nOK to continue, cancel to abort")) return;
 
 	const req = await fetch(`${server}fetch.php`, {
@@ -77,11 +80,14 @@ async function loadFromServer() {
 
 	console.log("before load", localStorage.journeys);
 
-	localStorage.journeys = JSON.parse(atob(json.data));
-	
-	alert(`Loaded from server! Refreshing the page for you :)\n\nMessage from server:\n${json.message}`);
+	// not sure if we need to parse then stringify, it broke before so I'm doing it anyway
+	const fetchedJourneyJSON = JSON.parse((atob(json.data)));
 
+	localStorage.setItem("journeys", JSON.stringify(fetchedJourneyJSON));
+	
 	console.log("after load", localStorage.journeys);
+
+	alert(`Loaded from server! Refreshing the page for you :)\n\nMessage from server:\n${json.message}`);
 
 	location.reload();
 }

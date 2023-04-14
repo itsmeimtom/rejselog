@@ -8,13 +8,16 @@ const journeys = JSON.parse(localStorage.getItem("journeys"));
 
 if (journeys.length === 0) alert("I couldn't find any journeys in localStorage! There is nothing to load! (journeys array is empty)");
 
+console.log(journeys.length);
+
 let index = 0;
+let outputHTML = "";
 
 for (const j of journeys) {
 	// thank you, chatgpt:
 	// "edit this piece of javascript so that all of the
 	// "included ${} bits are 'Unset' if the variable doesnt exist"
-	out.innerHTML += `
+	outputHTML += `
 			<li>
 				<p>${j.type ? j.type : "Type Missing"} <span>${j.identity ? j.identity : "Identity Missing"}</span> from <b>${j.origin}</b> to <b>${j.destination}</b> (${j.route})</p>
 				<p>${j.departureTimeActual} - ${j.arrivalTimeActual}</p>
@@ -27,6 +30,7 @@ for (const j of journeys) {
 
 	index++;
 }
+out.innerHTML = outputHTML;
 
 function clearLocalStorage() {
 	if (!confirm("Are you sure you want to clear everything?")) return;
