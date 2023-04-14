@@ -2,7 +2,7 @@
 
 const out = document.getElementById("out");
 
-if (!localStorage.getItem("journeys")) return alert("You have never saved a journey before! There is nothing to load! (missing localStorage object)");
+if (!localStorage.getItem("journeys")) alert("You have never saved a journey before! There is nothing to load! (missing localStorage object)");
 
 const journeys = JSON.parse(localStorage.getItem("journeys"));
 
