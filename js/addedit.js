@@ -167,8 +167,6 @@ function addNew() {
 
 	let journeys = JSON.parse(localStorage.getItem("journeys"));
 
-
-
 	// generate a unique enough UID for the journey
 	// todo: check whether it's actually unique (but it's unlikely to be a problem, especially when saving will self-hosted)
 	const uniqueEnough = parseInt(Date.now());
