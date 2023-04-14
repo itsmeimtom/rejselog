@@ -33,6 +33,7 @@ let journey = {
 
 
 	// these details are not for RailMiles
+	"snowflake": undefined, // Unique ID for the journey (used for future saving to a database)
 	"originId": undefined, // Origin Station ID, used for interacting with Rejseplanen
 	"originX": undefined, // Origin Station X coordinate
 	"originY": undefined, // Origin Station Y coordinate
