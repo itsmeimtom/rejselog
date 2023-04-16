@@ -164,7 +164,9 @@ function setNow(which) {
 }
 
 async function setNearest(which) {
-	const element = document.getElementById(`out-${which === "dep" ? "origin" : "destination"}`);
+	const key = (which === "dep") ? "origin" : "destination";
+	const element = document.getElementById(`out-${key}`);
+
 	const beforeName = element.value;
 	let afterName = "";
 
@@ -212,8 +214,10 @@ async function setNearest(which) {
 		}
 
 		element.value = afterName;
-		element.value = afterName;
+		journey[key] = afterName;
 	}
+
+	loadJourney();
 }
 
 function validate() {

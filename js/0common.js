@@ -29,7 +29,8 @@ let journey = {
 
 	"vehicles": "", // RM: vehicles - a list of units/vehicles used
 
-	"notes": undefined, // RM: notes - notes about the journey - we will put extra info and disclaimers here
+	"notes": "This journey was created by go.TomR.me/rejselog\nDistances are approximate, calculated as-the-crow-flies between stations. Info may not be complete or accurate.",
+	// RM: notes - notes about the journey - we will put extra info and disclaimers here
 
 
 	// these details are not for RailMiles

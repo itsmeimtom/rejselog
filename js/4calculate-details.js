@@ -1,17 +1,5 @@
 function stepFourCalcDetails(force) {
-	if(force) {
-		journey.stops = [
-			{
-				name: "dummy",
-				arrTime: "00:00",
-				depTime: "00:00",
-				x: 0,
-				y: 0
-			}
-		];
-		journey.startStationIndex = 0;
-		journey.endStationIndex = 0;
-	}
+	if(force) return location.href = `addedit.html?operation=add&journey=${encodeURIComponent(btoa(JSON.stringify(journey)))}`;
 
 	if (typeof(journey.startStationIndex) !== "number") { 
 		alert("Couldn't find a start station!\nYou will need to reload and try again. Sorry!\n\nThis is likely because you are viewing a Letbane service but have selected a station that is not a Letbane stop.");
@@ -49,15 +37,11 @@ function stepFourCalcDetails(force) {
 	journey.distanceKm = runningDist / 1000;
 
 	// set some info
-	
-
 	journey.vehicleType = getServiceVehicle(journey.type);
 	journey.operatorName = getServiceOperator(journey.type);
 
 	if (!journey.departureTimePlanned) journey.departureTimePlanned = `${journey.RJdate} ${journey.stops[journey.startStationIndex].depTime ? journey.stops[journey.startStationIndex].depTime : journey.RJtime}`;
 	if (!journey.arrivalTimePlanned) journey.arrivalTimePlanned = `${journey.RJdate} ${journey.stops[journey.endStationIndex].arrTime}`;
-
-	journey.notes = `This journey was created by go.TomR.me/rejselog\nDistances are approximate, calculated as-the-crow-flies between stations. Info may not be complete or accurate.`;
 
 	// check if journey spills into next day
 	let hours = [];
