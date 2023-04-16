@@ -26,44 +26,43 @@
 		</nav>
 	</header>
 
+	<section>
+		<h2>Manage Journeys</h2>
 
-	
-	<button onclick="serverURL()">
-		<span class="emoji-icon">✏️</span> Edit Server URL
-	</button>
+		<button onclick="serverURL()">
+			<span class="emoji-icon">✏️</span> Edit Server URL
+		</button>
 
-	<button onclick="saveToServer()">
-		<span class="emoji-icon">⬆️</span> Push
-	</button>
+		<button onclick="saveToServer()">
+			<span class="emoji-icon">⬆️</span> Push
+		</button>
 
-	<button onclick="loadFromServer()">
-		<span class="emoji-icon">⬇️</span> Pull
-	</button>
+		<button onclick="loadFromServer()">
+			<span class="emoji-icon">⬇️</span> Pull
+		</button>
 
-	saving to: <code id="server-url">server not set</code>
+		saving to: <code id="server-url">server not set</code>
 
-	<br><br>
+		<br><br>
 
-	<button onclick="clearLocalStorage()">
-		<span class="emoji-icon">🗑️</span> Clear localStorage
-	</button>
+		<button onclick="clearLocalStorage()">
+			<span class="emoji-icon">🗑️</span> Clear localStorage
+		</button>
 
-	<br><br>
+		<br><br>
 
-	<button onclick="exportJSON()"">
-		<span class="emoji-icon">🔣</span> Export all as JSON
-	</button>
+		<button onclick="exportJSON()"">
+			<span class="emoji-icon">🔣</span> Export all as JSON
+		</button>
 
-	<button onclick="exportCSV()" style="opacity: 0.5;">
-		<span class="emoji-icon">📃</span> Export all as CSV (RailMiles.me format)
-	</button>
+		<button onclick="exportCSV()" style="opacity: 0.5;">
+			<span class="emoji-icon">📃</span> Export all as CSV (RailMiles.me format)
+		</button>
 
-	<button onclick="importJSON()" style="opacity: 0.5;">
-		<span class="emoji-icon">📤</span> Import JSON
-	</button>
-
-
-	<hr>
+		<button onclick="importJSON()" style="opacity: 0.5;">
+			<span class="emoji-icon">📤</span> Import JSON
+		</button>
+	</section>
 
 	<section>
 		<ol id="out">

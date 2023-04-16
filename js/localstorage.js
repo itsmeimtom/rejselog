@@ -18,13 +18,13 @@ for (const j of journeys) {
 	// "edit this piece of javascript so that all of the
 	// "included ${} bits are 'Unset' if the variable doesnt exist"
 	outputHTML += `
-			<li class="${j.incomplete?'incomplete':''}">
-				<p>${j.type ? j.type : "Type Missing"} <span>${j.identity ? j.identity : "Identity Missing"}</span> from <b>${j.origin}</b> to <b>${j.destination}</b> (${j.route})</p>
+			<li class="${j.incomplete ? 'incomplete' : ''} ${j.uploaded ? 'uploaded' : ''}">
+				<p>${j.incomplete ? 'INCOMPLETE: ' : ''}${j.uploaded ? 'UPLOADED: ' : ''}${j.type ? j.type : "Type Missing"} <span>${j.identity ? j.identity : "Identity Missing"}</span> from <b>${j.origin}</b> to <b>${j.destination}</b> (${j.route})</p>
 				<p>${j.departureTimeActual} - ${j.arrivalTimeActual}</p>
 
 				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}'"><span class="emoji-icon">✏️</span> Edit this Journey</button>
 				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&quickset=true'"><span class="emoji-icon">⌚</span> Quick Set Arrival to Now</button>
-				<button onclick="location.href = 'addedit.html?operation=upload&index=${index}'"><span class="emoji-icon">☁️</span> Upload to RailMiles</button>
+				${j.uploaded ? "<!--" : ""}<button onclick="location.href = 'addedit.html?operation=upload&index=${index}'"><span class="emoji-icon">☁️</span> Upload to RailMiles</button>${j.uploaded ? "-->" : ""}
 				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&delete=true'"><span class="emoji-icon">❌</span> Delete this Journey</button>
 			</li>
 			`;

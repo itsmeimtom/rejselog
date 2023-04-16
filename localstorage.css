@@ -17,3 +17,7 @@ ol li p span {
 ol li.incomplete {
 	background: #faa;
 }
+
+ol li.uploaded {
+	background: #afa;
+}
