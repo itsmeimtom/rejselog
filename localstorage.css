@@ -13,3 +13,7 @@ ol li {
 ol li p span {
 	border: 1px solid #000;
 }
+
+ol li.incomplete {
+	background: #faa;
+}

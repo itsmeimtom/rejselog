@@ -43,8 +43,10 @@ let journey = {
 	"stops": [], // List of stops the service makes
 	"startStationIndex": undefined, // Index of the origin station in the stops array
 	"endStationIndex": undefined, // Index of the destination station in the stops array
-	"finalStop": undefined, // Final stop of the service (what would be shown on a destination blind)
-	"journeyDetailUrl": undefined // URL to the Rejseplanen journey details page, needed for getting service info
+	"finalStop": undefined, // Final stop of the service (what would be shown on a destination blind?)
+	"journeyDetailUrl": undefined, // URL to the Rejseplanen journey details page, needed for getting service info
+	"incomplete": false, // If the journey is incomplete, we will be more permissive with the data we accept
+	"uploaded": false // If the journey has been uploaded to RailMiles
 };
 
 function getEmoji(code) {

@@ -22,18 +22,26 @@
 	<section>
 		<h2 id="title">Hmm...</h2>
 
+		<div id="details"></div>
+
 		<label for="out-origin">Origin</label>
 		<input type="text" id="out-origin">
 
 		&bull;
 
 		<label for="out-originPlatform">Track</label>
-		<input type="text" id="out-originPlatform"><br>
+		<input type="text" id="out-originPlatform">
+		
+		<button onclick="setNearest('dep');"><span class="emoji-icon">📍</span> Set to Closest Station</button>
+
+
+		<br>
 
 		<label for="out-departureTimeActual">Actual Departure</label>
 		<input type="text" id="out-departureTimeActual">
 
 		<button onclick="setActual('dep');"><span class="emoji-icon">📜</span> Set to Planned</button>
+		<button onclick="setNow('dep');"><span class="emoji-icon">⌚</span> Set to Now</button>
 
 
 		<hr>
@@ -44,7 +52,11 @@
 		&bull;
 
 		<label for="out-destinationPlatform">Track</label>
-		<input type="text" id="out-destinationPlatform"><br>
+		<input type="text" id="out-destinationPlatform">
+		
+		<button onclick="setNearest('arr');"><span class="emoji-icon">📍</span> Set to Closest Station</button>
+
+		<br>
 
 		<label for="out-arrivalTimeActual">Actual Arrival</label>
 		<input type="text" id="out-arrivalTimeActual">
@@ -92,6 +104,11 @@
 		<div style="display: flex; justify-content: space-between; align-items: flex-start;">
 			<button onclick="startOverConf();"><span class="emoji-icon">❌</span> Start Over</button>
 			
+			<div>
+				<input type="checkbox" id="out-incomplete">
+				<label for="out-incomplete">Mark as incomplete</label>
+			</div>
+
 			<button onclick="addNew();" id="save-button" style="display: none;"><span class="emoji-icon">💾</span> Save this Journey</button>
 			<button onclick="editExisting();" id="edit-button" style="display: none;"><span class="emoji-icon">✏️</span> Edit this Journey</button>
 
@@ -99,6 +116,7 @@
 	</section>
 
 	<script src="js/0common.js"></script>
+	<script src="js/osm.js"></script>
 	<script src="js/addedit.js"></script>
 </body>
 </html>

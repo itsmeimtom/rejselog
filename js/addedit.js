@@ -5,27 +5,44 @@ let params = new URLSearchParams(document.location.search);
 
 // what a mess...
 // todo: clean up a lot
+
+// adding a journey
 if(params.get("operation") == "add") {
 	operation = "add";
 
-	if(!params.get("journey")) alert("Missing journey, cannot load the journey to add");
+	// if there's no journey given then error
+	if (!params.get("journey")) alert("Missing journey, cannot load the journey to add");
 
 	journey = JSON.parse(atob(decodeURIComponent(params.get("journey"))));
-} else if (params.get("operation") == "edit") {
-	operation = "edit";
 
-	if (!params.get("index")) alert("Missing journey index, cannot load the journey to edit");
+	// if there's no localStorage object then create one
+	if (!localStorage.getItem("journeys")) {
+		localStorage.setItem("journeys", JSON.stringify([]));
+	}
 
-	journeyIndex = parseInt(params.get("index"));
+	// show save button
+	document.getElementById("save-button").style.display = "block";
 }
 
-if(operation == "edit") {
+// editing (modifying, deleting)
+if (params.get("operation") == "edit") {
+	operation = "edit";
+
+	// if there's no localStorage object then error
 	if (!localStorage.getItem("journeys")) alert("Missing localStorage object, cannot load any journeys to edit");
 
 	const journeys = JSON.parse(localStorage.getItem("journeys"));
 
+	// if there's no journeys in localStorage then error
 	if (journeys.length === 0) alert("No journeys could be found in localStorage, cannot load any journeys to edit");
 
+
+	// if we didn't give an index then error
+	if (!params.get("index")) alert("Missing journey index, cannot load the journey to edit");
+	// else set the index
+	journeyIndex = parseInt(params.get("index"));
+
+	// show edit button
 	document.getElementById("edit-button").style.display = "block";
 
 	if (journeys[journeyIndex]) {
@@ -34,61 +51,76 @@ if(operation == "edit") {
 		alert("No journey could be found at index " + journeyIndex + ", cannot load the journey to edit");
 	}
 
-	if(params.get("quickset") == "true") {
+	// special cases for quickset and delete
+	if (params.get("quickset") == "arr") {
+		// special edit case one: quickset
+		// automatically sets the arrival time to the current time
 		loadJourney();
-		setNow();
+		setNow("arr");
+		editExisting();
+
+	} else if (params.get("quickset") == "dep") {
+		// special edit case two: quickset
+		// automatically sets the departure time to the current time
+		loadJourney();
+		setNow("dep");
 		editExisting();
 	} else if (params.get("delete") == "true") {
+		// special edit case three: delete
+		// deletes the journey
 		deleteExisting();
 	}
-
-} else if (operation == "add") {
-	if (!localStorage.getItem("journeys")) {
-		localStorage.setItem("journeys", JSON.stringify([]));
-	}
-
-	document.getElementById("save-button").style.display = "block";
-} else {
-	alert("Unknown operation! How did you get here?");
 }
 
+// this is the only time we ever use the "operation" variable, hah
+document.getElementById("title").innerHTML = operation == "add" ? "Adding Journey" : `Editing Journey ${journeyIndex}`;
 
-document.getElementById("title").innerHTML = operation == "add" ? "Adding Journey" : `Edditing Journey ${journeyIndex}`;
-
+// journey is set above in the operation if statements (this is janky)
 loadJourney(journey);
 
 function loadJourney(inJourney) {
 	if(inJourney) journey = inJourney;
 
-	document.getElementById("out-origin").value = journey.origin ? journey.origin : "SET ME!";
-	document.getElementById("out-destination").value = journey.destination ? journey.destination : "SET ME!";
+	document.getElementById("details").innerHTML = "";
+	if(journey["incomplete"] === true) document.getElementById("details").innerHTML += "<p>This journey has been marked as incomplete, and cannot be uploaded to RailMiles.</p>";
+	if(journey["uploaded"] === true) document.getElementById("details").innerHTML += "<p>This journey has been uploaded to RailMiles. Please remember to edit this journey there too.</p>";
+
+	document.getElementById("out-origin").value = journey.origin ? journey.origin : "";
+	document.getElementById("out-destination").value = journey.destination ? journey.destination : "";
 
 	document.getElementById("out-originPlatform").value = journey.originPlatform ? journey.originPlatform : "";
 	document.getElementById("out-destinationPlatform").value = journey.destinationPlatform ? journey.destinationPlatform : "";
 
-	document.getElementById("out-departureTimeActual").value = journey.departureTimeActual ? journey.departureTimeActual : "SET ME!";
-	document.getElementById("out-arrivalTimeActual").value = journey.arrivalTimeActual ? journey.arrivalTimeActual : "SET ME!";
+	document.getElementById("out-departureTimeActual").value = journey.departureTimeActual ? journey.departureTimeActual : "";
+	document.getElementById("out-arrivalTimeActual").value = journey.arrivalTimeActual ? journey.arrivalTimeActual : "";
 
-	document.getElementById("out-distanceKm").value = journey.distanceKm ? journey.distanceKm : "SET ME!";
-	document.getElementById("out-route").value = journey.route ? journey.route : "SET ME!";
+	document.getElementById("out-distanceKm").value = journey.distanceKm ? journey.distanceKm : "";
+	document.getElementById("out-route").value = journey.route ? journey.route : "";
 
-	document.getElementById("out-operatorName").value = journey.operatorName ? journey.operatorName : "SET ME!";
-	document.getElementById("out-identity").value = journey.identity ? journey.identity : "SET ME!";
-	document.getElementById("out-vehicleType").value = journey.vehicleType ? journey.vehicleType : "SET ME!";
+	document.getElementById("out-operatorName").value = journey.operatorName ? journey.operatorName : "";
+	document.getElementById("out-identity").value = journey.identity ? journey.identity : "";
+	document.getElementById("out-vehicleType").value = journey.vehicleType ? journey.vehicleType : "";
 	document.getElementById("out-vehicles").value = journey.vehicles;
 
-	document.getElementById("out-departureTimePlanned").value = journey.departureTimePlanned ? journey.departureTimePlanned : "SET ME!";
-	document.getElementById("out-arrivalTimePlanned").value = journey.arrivalTimePlanned ? journey.arrivalTimePlanned : "SET ME!";
+	document.getElementById("out-departureTimePlanned").value = journey.departureTimePlanned ? journey.departureTimePlanned : "";
+	document.getElementById("out-arrivalTimePlanned").value = journey.arrivalTimePlanned ? journey.arrivalTimePlanned : "";
 
 	document.getElementById("out-notes").value = journey.notes ? journey.notes : "";
+	document.getElementById("out-incomplete").checked = journey.incomplete ? true : false;
 }
 
-// set up updating onchange
+// set up updating onchange - updates the journey object as you type or change things
 for (const e of document.querySelectorAll("input")) {
 	e.addEventListener("change", () => {
 		console.log("changed", e.id);
 		console.log("before journey", journey);
-		journey[e.id.replace("out-", "")] = e.value;
+
+		if(e.type === "checkbox") {
+			journey[e.id.replace("out-", "")] = e.checked;
+		} else {
+			journey[e.id.replace("out-", "")] = e.value;
+		}
+
 		console.log("after journey", journey);
 	});
 }
@@ -109,56 +141,132 @@ function startOverConf() {
 }
 
 function setActual(which) {
-	switch (which) {
-		case "dep":
-			journey.departureTimeActual = journey.departureTimePlanned;
-			break;
-		case "arr":
-			journey.arrivalTimeActual = journey.arrivalTimePlanned;
-			break;
-		default:
-			alert("How did you get here?");
-	}
+	if (which === "dep") journey.departureTimeActual = journey.departureTimePlanned;
+	if (which === "arr") journey.arrivalTimeActual = journey.arrivalTimePlanned;
 
 	loadJourney();
 }
 
-function setNow() {
+function setNow(which) {
 	const now = new Date();
 
 	let date = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
 	let time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
 
-	journey.arrivalTimeActual = `${date} ${time}`;
+	if(which === "dep") {
+		journey.departureTimeActual = `${date} ${time}`;
+	} else {
+		// if anything other than "dep" then set arrival time (in case I missed something somewhere that calls this)
+		journey.arrivalTimeActual = `${date} ${time}`;
+	}
 
 	loadJourney();
+}
+
+async function setNearest(which) {
+	const element = document.getElementById(`out-${which === "dep" ? "origin" : "destination"}`);
+	const beforeName = element.value;
+	let afterName = "";
+
+	element.setAttribute("readonly", "readonly");
+	element.value = "About to use your location!";
+
+	let nearest = await getNearestStations(element);
+
+	element.removeAttribute("readonly");
+
+	console.log(nearest);
+
+	if(typeof(nearest) === "string") {
+		// if it's a string, it's an error message
+		
+		alert(nearest);
+		element.value = beforeName;
+		return;
+	} else if(nearest === false) {
+		// if it's false, it's an error we've already alerted the user about
+		element.value = beforeName;
+		return;
+	} else {
+		// hopefully it's an API response
+
+		let elements = nearest.elements ? nearest.elements : undefined;
+
+		if(!elements) {
+			alert(`Could not find any nearby stations (within 1.5km).`);
+			element.value = beforeName;
+			return false;
+		}
+
+		if(elements.length === 0) {
+			alert(`Could not find any nearby stations (within 1.5km).`);
+			element.value = beforeName;
+			return false;
+		}
+
+		for(const stop of elements) {
+			if(stop.tags.name) {
+				afterName = stop.tags.name;
+				break;
+			}
+		}
+
+		element.value = afterName;
+		element.value = afterName;
+	}
 }
 
 function validate() {
 	let problems = [];
 
-	if (!journey.departureTimeActual) problems.push("Please set the actual departure time.");
-	if (!journey.arrivalTimeActual) problems.push("Please set the actual arrival time.");
-	if (!journey.operatorName || journey.operatorName == "SET ME!") problems.push("Please set the operator name.");
+	// check for required fields, but only if the journey is marked as complete - dates are checked later
+	if(!journey.incomplete) {
+		for (const id of ["origin", "destination", "operatorName", "vehicleType"]) {
 
-	for (const e of document.querySelectorAll("input")) {
-		if (e.value == "SET ME!") problems.push("Please set all the fields marked 'SET ME!'");
-		if (e.value.includes("undefined")) problems.push("Please check all the fields, there are some undefined values.");
+			if(!(id in journey)) {
+				problems.push(`Please set ${id}. This is a required field.`);
+				continue;
+			}
+
+			if(journey[id] == "") {
+				problems.push(`Please set ${id}. This is a required field, and cannot be blank.`);
+				continue;
+			}
+		}
 	}
 
-	// check dates
-	for (const id of ["departureTimeActual", "arrivalTimeActual", "departureTimePlanned", "arrivalTimePlanned"]) {
-		// if doesnt match the regex (holy crap copilot generated this regex without any prompting)
+	
 
-		if (!journey[id].match(/^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/)) problems.push(`Please check the ${id} date format. It should be DD.MM.YYYY HH:MM`);
+	// check dates, but only if the journey is marked as complete
+	if(!journey.incomplete) {
+		for (const id of ["departureTimeActual", "arrivalTimeActual", "departureTimePlanned", "arrivalTimePlanned"]) {
+			// permit blank planned times
+			if (id === "departureTimePlanned" && !(id in journey)) continue;
+			if (id === "arrivalTimePlanned" && !(id in journey)) continue;
+			
+			// if the actual times are blank then they must be set
+			if(!(id in journey)) {
+				problems.push(`Please set the ${id} date. This is a required field.`);
+				continue;
+			}
+
+
+			// this date exists but does it match the regex (holy crap copilot generated this regex without any prompting)
+			if (!journey[id].match(/^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}$/)) problems.push(`Please check the ${id} date format. It should be DD.MM.YYYY HH:MM`);
+		}
 	}
+
+	// remove duplicate problems
+	// https://stackoverflow.com/a/9229821
+	problems = [...new Set(problems)]; 
 
 	let problemString = "";
 	for(const problem of problems) {
 		problemString += `- ${problem}\n`
 	}
-	if (problems.length > 0) alert(`There are some problems with your journey:\n${problemString}\nPlease fix them before saving.`);
+	if (problems.length > 0) alert(`There are some problems with your journey:\n${problemString}\nPlease fix them before saving. To ignore, you can mark this journey as incomplete and update it later.`);
 
+	// if there are no problems, return true
 	return (problems.length === 0) ? true : false;
 }
 
