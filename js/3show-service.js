@@ -42,6 +42,8 @@ async function stepThreeShowService() {
 	console.log(data);
 
 	if (data.JourneyDetail.error) {
+		// it's probably because it's a metro service, so we'll set the type to metro by default so some things are set nicely
+		journey.type = "M";
 		alert(`Something went wrong with the API, this isn't your fault!\n\n${data.JourneyDetail.error}\n\nYou can start again or manually enter information in the next step.`);
 		return stepFourCalcDetails(true);
 	}
