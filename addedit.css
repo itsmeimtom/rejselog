@@ -1,0 +1,34 @@
+/* mobile rules */
+@media screen and (max-width: 720px) {
+	label {
+		display: block;
+		width: 100%;
+	}
+
+	input:not([type=checkbox]) {
+		display: block;
+		width: calc(100% - 1em);
+		margin-bottom: 1em;
+		font-size: 1.5em;
+	}
+
+	button {
+		display: block;
+		width: calc(100%);
+		margin-bottom: 1em;
+		font-size: 1.2em;
+	}
+
+	hr {
+		margin: 3em 0;
+	}
+
+	section div:last-of-type {
+		display: block !important;
+		text-align: center;
+	}
+
+	section div:last-of-type div {
+		margin-bottom: 1em;
+	}
+}

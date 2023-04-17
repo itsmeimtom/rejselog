@@ -19,8 +19,8 @@ for (const j of journeys) {
 	// "included ${} bits are 'Unset' if the variable doesnt exist"
 	outputHTML += `
 			<li class="${j.incomplete ? 'incomplete' : ''} ${j.uploaded ? 'uploaded' : ''}">
-				<p>${j.incomplete ? 'INCOMPLETE: ' : ''}${j.uploaded ? 'ON RAILMILES: ' : ''}${j.type ? j.type : "Type Missing"} <span>${j.identity ? j.identity : "Identity Missing"}</span> from <b>${j.origin}</b> to <b>${j.destination}</b> (${j.route})</p>
-				<p>${j.departureTimeActual} - ${j.arrivalTimeActual}</p>
+				<p><span>${j.incomplete ? 'INCOMPLETE' : ''}${j.uploaded ? 'ON RAILMILES' : ''}</span><span class="id">${j.identity ? j.identity : "Identity Missing"}</span> from <b>${j.origin}</b> to <b>${j.destination}</b> (${j.route})</p>
+				<p><span>${j.departureTimeActual}</span> - <span>${j.arrivalTimeActual}</span></p>
 
 				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}'"><span class="emoji-icon">✏️</span> Edit this Journey</button>
 				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&quickset=true'"><span class="emoji-icon">⌚</span> Quick Set Arrival to Now</button>

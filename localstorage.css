@@ -10,7 +10,7 @@ ol li {
 	border: 1px solid #000;
 }
 
-ol li p span {
+ol li p span.id {
 	border: 1px solid #000;
 }
 
@@ -20,4 +20,46 @@ ol li.incomplete {
 
 ol li.uploaded {
 	background: #afa;
+}
+
+code {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+
+/* mobile rules */
+@media screen and (max-width: 720px) {
+	label {
+		display: block;
+		width: 100%;
+	}
+
+	input:not([type=checkbox]) {
+		display: block;
+		width: calc(100% - 1em);
+		margin-bottom: 1em;
+		font-size: 1.5em;
+	}
+
+	button {
+		display: block;
+		width: calc(100%);
+		margin-bottom: 1em;
+		font-size: 1.2em;
+	}
+
+	code {
+		display: block;
+		margin-bottom: 2em;
+	}
+
+	ol#out li {
+		text-align: center;
+	}
+
+	ol#out li p span:not(.emoji-icon), ol#out li b {
+		display: block;
+		width: 100%;
+	}
 }

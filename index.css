@@ -108,3 +108,62 @@ span.service-dest {
 footer {
 	margin-top: 5em;
 }
+
+/* mobile rules */
+@media screen and (max-width: 720px) {
+	div#step-1-form {
+		display: block !important;
+		font-size: 1.5em;
+	}
+
+	section#step-1 p {
+		font-size: 1em;
+		margin-top: 2em;
+	}
+
+	ul#station-list {
+		margin-top: 2em;
+	}
+
+	ol#service-list {
+		text-align: center;
+	}
+
+	ol#service-list li span {
+		min-width: none !important;
+	}
+
+	ol#service-list li span.service-dest {
+		display: block;
+		float: none;
+		margin-top: 1em;
+	}
+
+	section#step-2-strip {
+		display: block !important;
+	}
+
+	section#step-2-strip span:not(.emoji-icon) {
+  		width: 100%;
+  		display: block;
+	}
+
+	section#step-2-strip span#service-time {
+		text-align: center;
+		margin-top: 1em;
+	}
+
+	footer {
+		text-align: center;
+	}
+
+	footer p {
+		margin: 2em 0;
+	}
+
+	footer span.emoji-icon {
+		display: block;
+		width: 100%;
+		text-align: center;
+	}
+}
