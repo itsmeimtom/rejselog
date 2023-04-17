@@ -1,4 +1,15 @@
 function stepFourCalcDetails(force) {
+	// if metro, s-tog or letbane, the route should be identity
+	if (journey.type == "M" || journey.type == "S" || journey.type == "LET") {
+		journey.route = `${journey.identity}, ${journey.route}`;
+		journey.identity = ``;
+	}
+
+	// set some info
+	journey.vehicleType = getServiceVehicle(journey.type);
+	journey.operatorName = getServiceOperator(journey.type);
+
+	// if things are brokey then skip to adding
 	if(force) return location.href = `addedit.html?operation=add&journey=${encodeURIComponent(btoa(JSON.stringify(journey)))}`;
 
 	if (typeof(journey.startStationIndex) !== "number") { 
@@ -36,10 +47,6 @@ function stepFourCalcDetails(force) {
 
 	journey.distanceKm = runningDist / 1000;
 
-	// set some info
-	journey.vehicleType = getServiceVehicle(journey.type);
-	journey.operatorName = getServiceOperator(journey.type);
-
 	if (!journey.departureTimePlanned) journey.departureTimePlanned = `${journey.RJdate} ${journey.stops[journey.startStationIndex].depTime ? journey.stops[journey.startStationIndex].depTime : journey.RJtime}`;
 	if (!journey.arrivalTimePlanned) journey.arrivalTimePlanned = `${journey.RJdate} ${journey.stops[journey.endStationIndex].arrTime}`;
 
@@ -58,12 +65,6 @@ function stepFourCalcDetails(force) {
 		// update the arrival dates
 		if (journey.arrivalTimePlanned) journey.arrivalTimePlanned = nextDay(journey.arrivalTimePlanned);
 		if (journey.arrivalTimeActual) journey.arrivalTimeActual = nextDay(journey.arrivalTimeActual);
-	}
-
-	// if metro, s-tog or letbane, the route should be identity
-	if(journey.type == "M" || journey.type == "S" || journey.type == "LET") {
-		journey.route = `${journey.identity}, ${journey.route}`;
-		journey.identity = ``;
 	}
 
 	location.href = `addedit.html?operation=add&journey=${encodeURIComponent(btoa(JSON.stringify(journey)))}`;
