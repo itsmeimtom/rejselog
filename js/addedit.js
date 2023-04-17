@@ -6,6 +6,18 @@ let params = new URLSearchParams(document.location.search);
 // what a mess...
 // todo: clean up a lot
 
+// uploading a journey
+if (params.get("operation") == "upload") {
+	operation = "upload";
+
+	// if no journey index given then error
+	if (!params.get("index")) alert("Missing journey index, cannot load the journey to upload");
+
+	document.getElementById("title").innerHTML = "Taking you to the uploader";
+
+	location.href = "rm.html?operation=upload&index=" + params.get("index");
+}
+
 // adding a journey
 if(params.get("operation") == "add") {
 	operation = "add";
@@ -73,7 +85,23 @@ if (params.get("operation") == "edit") {
 }
 
 // this is the only time we ever use the "operation" variable, hah
-document.getElementById("title").innerHTML = operation == "add" ? "Adding Journey" : `Editing Journey ${journeyIndex}`;
+let title = "";
+
+switch (operation) {
+	case "add":
+		title = "Adding Journey";
+		break;
+	case "edit":
+		title = `Editing Journey ${journeyIndex}`;
+		break;
+	case "upload":
+		title = "Taking you to the uploader";
+		break;
+	default:
+		title = "Not sure what you're doing here";
+}
+
+document.getElementById("title").innerText = title;
 
 // journey is set above in the operation if statements (this is janky)
 loadJourney(journey);

@@ -57,3 +57,24 @@ function exportCSV() {
 function importJSON() {
 	return alert("Not implemented yet. Sorry!");
 }
+
+// for RailMiles cookie prompt
+let RMcookie = undefined;
+
+if (!localStorage.getItem("cookie")) {
+	document.getElementById("rm-cookie").innerText = "Set";
+} else {
+	document.getElementById("rm-cookie").innerText = "Change";
+	RMcookie = localStorage.getItem("cookie");
+}
+
+function railmilesCookie() {
+	let given = prompt("Please enter your RailMiles session cookie. Do not include anything other than the cookie's content. Do not give this out to anyone.\n\nThis will only be stored in your browser storage. To clear, set to nothing.", `${RMcookie ? RMcookie : "abcdefghijklmnopqrstuvwxyz123456"}`);
+
+	if (!given) RMcookie = "";
+
+	localStorage.setItem("cookie", given);
+	RMcookie = given;
+
+	document.getElementById("rm-cookie").innerText = "Change";
+}

@@ -22,14 +22,14 @@ let journey = {
 
 	"distanceKm": undefined, // RailMiles stores distance in miles, but we will use KM. Importing/sending to RM can handle conversion.
 
-	"route": undefined, // RM: route - here we use the "Direction" of the train, which sometimes is different from the destination
+	"route": undefined, // RM: route_description - here we use the "Direction" of the train, which sometimes is different from the destination
 	"identity" : undefined, // RM: identity - this will be the train "name" - eg IC 1234
 
 	"vehicleType": undefined, // We will use words (Train, Metro) but RM uses letters
 
 	"vehicles": "", // RM: vehicles - a list of units/vehicles used
 
-	"notes": "This journey was created by go.TomR.me/rejselog\nDistances are approximate, calculated as-the-crow-flies between stations. Info may not be complete or accurate.",
+	"notes": "This journey was created by go.TomR.me/rejselog. Distances are approximate, calculated as-the-crow-flies between stations. Info may not be complete or accurate.",
 	// RM: notes - notes about the journey - we will put extra info and disclaimers here
 
 
