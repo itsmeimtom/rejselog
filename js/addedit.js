@@ -156,9 +156,43 @@ for (const e of document.querySelectorAll("input")) {
 }
 
 document.getElementById("out-notes").addEventListener("change", () => {
-	console.log("changed", e.id);
+	console.log("changed notes");
 	console.log("before journey", journey);
 	journey.notes = document.getElementById("out-notes").value;
+	console.log("after journey", journey);
+});
+
+document.getElementById("vehicle-fill").value = "default";
+document.getElementById("vehicle-fill").addEventListener("change", () => {
+	console.log("vehicle added");
+	console.log("before journey", journey);
+
+	let currentVehicles = document.getElementById("out-vehicles").value.split(",");
+	let inputValue = document.getElementById("vehicle-fill").value;
+
+	if(inputValue !== "default") {
+		currentVehicles.push(getTrainDetails(inputValue));
+		currentVehicles = currentVehicles.filter((s) => s !== "");
+
+		document.getElementById("out-vehicles").value = currentVehicles.join(",");
+		journey.vehicles = document.getElementById("vehicle-fill").value;
+	}
+
+	console.log("after journey", journey);	
+});
+
+document.getElementById("operator-fill").value = "default";
+document.getElementById("operator-fill").addEventListener("change", () => {
+	console.log("operator set");
+	console.log("before journey", journey);
+
+	if (document.getElementById("operator-fill").value !== "default") {
+		let inputValue = document.getElementById("operator-fill").options[document.getElementById("operator-fill").selectedIndex].text;
+
+		document.getElementById("out-operatorName").value = inputValue;
+		journey.operatorName = inputValue;
+	}
+
 	console.log("after journey", journey);
 });
 

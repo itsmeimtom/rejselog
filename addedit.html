@@ -78,7 +78,25 @@
 		<hr>
 
 		<label for="out-operatorName">Operator</label>
-		<input type="text" id="out-operatorName"><br>
+		<input type="text" id="out-operatorName">
+
+		<select id="operator-fill">
+			<option selected="selected" value="default">Select to pick an operator</option>
+
+			<option disabled>Heavy Rail</option>
+			<option value="DSB">DSB</option>
+			<option value="DSBS">DSB S-Tog</option>
+			<option value="Arriva">Arriva</option>
+			<option value="Ore">Øresundståg</option>
+			<option value="SJ">SJ</option>
+
+			<option disabled>Metro and Light Rail</option>
+			<option value="M">Københavns Metro</option>
+			<option value="Od">Odense Letbane</option>
+			<option value="Ar">Aarhus Letbane</option>
+		</select>
+
+		<br>
 
 		<label for="out-identity">Identity (name)</label>
 		<input type="text" id="out-identity"><br>
@@ -88,6 +106,30 @@
 
 		<label for="out-vehicles">Vehicles (commas between)</label>
 		<input type="text" id="out-vehicles">
+
+		<select id="vehicle-fill">
+			<option selected="selected" value="default">Select to add a train</option>
+
+			<option disabled>DMUs</option>
+			<option value="IC2">IC2 (Localtok) (2 carriages)</option>
+			<option value="IC3">IC3 (3 carriages)</option>
+			<option value="IC4">IC4 (4 carriages)</option>
+
+			<option disabled>EMU</option>
+			<option value="IR4">ER (IR4) (4 carriages)</option>
+			<option value="ET">ET (Øresundståg) (3 carriages)</option>
+			<option value="SA">SA (4th Gen S-Tog) (8 carriages)</option>
+			<option value="SE">SE (4th Gen S-Tog) (4 carriages)</option>
+
+			<option disabled>Locomotives</option>
+			<option value="EG">EG (EuroSprinter)</option>
+			<option value="EB">EJ (Siemens Vectron)</option>
+
+			<option disabled>Metro and Light Rail</option>
+			<option value="ART">Aarhus Letbane (Tango Tram-Trains)</option>
+			<option value="ARV">Aarhus Letbane (Variobahn Trams)</option>
+			<option value="OD">Odense Letbane</option>
+		</select>
 
 		<hr>
 

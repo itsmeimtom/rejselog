@@ -60,6 +60,12 @@ function stepFourCalcDetails(force) {
 		if (journey.arrivalTimeActual) journey.arrivalTimeActual = nextDay(journey.arrivalTimeActual);
 	}
 
+	// if metro, s-tog or letbane, the route should be identity
+	if(journey.type == "M" || journey.type == "S" || journey.type == "LET") {
+		journey.route = `${journey.identity}, ${journey.route}`;
+		journey.identity = ``;
+	}
+
 	location.href = `addedit.html?operation=add&journey=${encodeURIComponent(btoa(JSON.stringify(journey)))}`;
 }
 

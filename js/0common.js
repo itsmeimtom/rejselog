@@ -82,7 +82,6 @@ function getServiceType(code) {
 		case "LET": return "Letbane (Local Light Rail)";
 		case "EN": return "EuroNight";
 		case "TOG": return "Other Train";
-		
 	}
 
 	return "Unknown";
@@ -118,8 +117,10 @@ function getServiceOperator(code) {
 
 	if(code === "LET") {
 		if(journey.origin.toLowerCase().includes("odense")) {
+			// odense letbane stops are prefixed with "(Odense)"
 			return "Odense Letbane";
-		} else if (journey.origin.toLowerCase().includes("aarhus")) {
+		} else {
+			// aarhus doesn't have "aarhus" in the names
 			return "Aarhus Letbane";
 		}
 	} else {
@@ -129,12 +130,28 @@ function getServiceOperator(code) {
 	return undefined;
 }
 
-// function getServiceTrainType(code) {
-// 	code = code.toUpperCase();
+function getTrainDetails(code) {
+	code = code.toUpperCase();
 
-// 	switch(code) {
-// 		case "M": return "Metro";
-// 	}
+	switch (code) {
+		case "IC2": return "IC2 XXXX";
 
-// 	return "Unknown";
-// }
+		case "IC3": return "IC3 5XXX";
+		case "IC4": return "IC4 56XX";
+		
+		case "IR4": return "ER (IR4) XXXX";
+		case "ET": return "ET 4XXX";
+
+		case "SA": return "SA XXXX";
+		case "SE": return "SE XXXX";
+
+		case "EG": return "EG 31XX";
+		case "EB": return "EB 32XX";
+
+		case "ART": return "2XXX";
+		case "ARV": return "1XXX (last two digits)";
+		case "OD": return "XX";
+	}
+
+	return "?";
+}

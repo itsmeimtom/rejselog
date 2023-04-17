@@ -182,7 +182,7 @@ async function uploadToRailMiles() {
 		case "ferry":
 			vehicleTypeToSet = 2;
 			break;
-		case "Metro":
+		case "metro":
 			vehicleTypeToSet = 3;
 			break;
 		default:
