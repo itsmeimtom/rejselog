@@ -16,7 +16,7 @@ async function queryOSM(lat, lon) {
 	e.value = "Querying OSM API";
 	console.log(`Querying OSM for stops near ${lat}, ${lon}`);
 
-	const query = `[out:json];node["railway"="stop"](around:2000,${lat},${lon});out;`;
+	const query = `[out:json];node["railway"="stop"](around:250,${lat},${lon});out;`;
 
 	const url = "https://overpass-api.de/api/interpreter";
 

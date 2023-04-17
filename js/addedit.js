@@ -263,13 +263,13 @@ async function setNearest(which) {
 		let elements = nearest.elements ? nearest.elements : undefined;
 
 		if(!elements) {
-			alert(`Could not find any nearby stations (within 2km).`);
+			alert(`Could not find any nearby stations (within 250m).`);
 			element.value = beforeName;
 			return false;
 		}
 
 		if(elements.length === 0) {
-			alert(`Could not find any nearby stations (within 2km).`);
+			alert(`Could not find any nearby stations (within 250m).`);
 			element.value = beforeName;
 			return false;
 		}
