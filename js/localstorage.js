@@ -23,7 +23,8 @@ for (const j of journeys) {
 				<p><span>${j.departureTimeActual}</span> - <span>${j.arrivalTimeActual}</span></p>
 
 				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}'"><span class="emoji-icon">✏️</span> Edit this Journey</button>
-				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&quickset=true'"><span class="emoji-icon">⌚</span> Quick Set Arrival to Now</button>
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&quickset=dep'"><span class="emoji-icon">⌚</span> Quick Set Departure to Now</button>
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&quickset=arr'"><span class="emoji-icon">⌚</span> Quick Set Arrival to Now</button>
 				${j.uploaded ? "<!--" : ""}<button onclick="location.href = 'addedit.html?operation=upload&index=${index}'"><span class="emoji-icon">☁️</span> Upload to RailMiles</button>${j.uploaded ? "-->" : ""}
 				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&delete=true'"><span class="emoji-icon">❌</span> Delete this Journey</button>
 			</li>
