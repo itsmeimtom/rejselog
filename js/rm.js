@@ -224,6 +224,7 @@ async function uploadToRailMiles() {
 	log(json);
 
 	if(json.error) {
+		alert(`Error: ${json.error}`);
 		return log(`Error: ${json.error}`);
 	}
 
@@ -237,11 +238,11 @@ async function uploadToRailMiles() {
 		log(`Taking you to RailMiles in 5 seconds`);
 		// redirect to journeys list in a few seconds
 		window.setTimeout(() => {
-			window.location.href = "https://my.railmiles.me/journeys/list/";;
+			return window.location.href = "https://my.railmiles.me/journeys/list/";;
 		}, 5000);
-
-		return;
 	}
+
+	log(`End!`);
 }
 
 // chatgpt!

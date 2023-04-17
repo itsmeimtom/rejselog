@@ -135,6 +135,8 @@ function loadJourney(inJourney) {
 
 	document.getElementById("out-notes").value = journey.notes ? journey.notes : "";
 	document.getElementById("out-incomplete").checked = journey.incomplete ? true : false;
+
+	document.getElementById("out-uploaded").checked = journey.uploaded ? true : false;
 }
 
 // set up updating onchange - updates the journey object as you type or change things
@@ -159,6 +161,10 @@ document.getElementById("out-notes").addEventListener("change", () => {
 	journey.notes = document.getElementById("out-notes").value;
 	console.log("after journey", journey);
 });
+
+if(journey.uploaded) {
+	document.getElementById("uploaded").style.display = "block";
+}
 
 function startOverConf() {
 	if (confirm("Are you sure you want to start over?")) {
