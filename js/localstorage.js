@@ -10,10 +10,11 @@ if (journeys.length === 0) alert("I couldn't find any journeys in localStorage! 
 
 console.log(journeys.length);
 
-let index = 0;
 let outputHTML = "";
 
-for (const j of journeys.reverse()) {
+for (const i in journeys) {
+	const j = journeys[i];
+	
 	// thank you, chatgpt:
 	// "edit this piece of javascript so that all of the
 	// "included ${} bits are 'Unset' if the variable doesnt exist"
@@ -22,15 +23,13 @@ for (const j of journeys.reverse()) {
 				<p><span>${j.incomplete ? 'INCOMPLETE' : ''}${j.uploaded ? 'ON RAILMILES' : ''}</span><span class="id">${j.identity ? j.identity : "Identity Missing"}</span> from <b>${j.origin}</b> to <b>${j.destination}</b> (${j.route})</p>
 				<p><span>${j.departureTimeActual}</span> - <span>${j.arrivalTimeActual}</span></p>
 
-				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}'"><span class="emoji-icon">✏️</span> Edit this Journey</button>
-				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&quickset=dep'"><span class="emoji-icon">⌚</span> Quick Set Departure to Now</button>
-				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&quickset=arr'"><span class="emoji-icon">⌚</span> Quick Set Arrival to Now</button>
-				${j.uploaded ? "<!--" : ""}<button onclick="location.href = 'addedit.html?operation=upload&index=${index}'"><span class="emoji-icon">☁️</span> Upload to RailMiles</button>${j.uploaded ? "-->" : ""}
-				<button onclick="location.href = 'addedit.html?operation=edit&index=${index}&delete=true'"><span class="emoji-icon">❌</span> Delete this Journey</button>
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${i}'"><span class="emoji-icon">✏️</span> Edit this Journey</button>
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${i}&quickset=dep'"><span class="emoji-icon">⌚</span> Quick Set Departure to Now</button>
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${i}&quickset=arr'"><span class="emoji-icon">⌚</span> Quick Set Arrival to Now</button>
+				${j.uploaded ? "<!--" : ""}<button onclick="location.href = 'addedit.html?operation=upload&index=${i}'"><span class="emoji-icon">☁️</span> Upload to RailMiles</button>${j.uploaded ? "-->" : ""}
+				<button onclick="location.href = 'addedit.html?operation=edit&index=${i}&delete=true'"><span class="emoji-icon">❌</span> Delete this Journey</button>
 			</li>
 			`;
-
-	index++;
 }
 out.innerHTML = outputHTML;
 
