@@ -13,7 +13,7 @@ console.log(journeys.length);
 let index = 0;
 let outputHTML = "";
 
-for (const j of journeys) {
+for (const j of journeys.reverse()) {
 	// thank you, chatgpt:
 	// "edit this piece of javascript so that all of the
 	// "included ${} bits are 'Unset' if the variable doesnt exist"
