@@ -4,7 +4,8 @@ const stationList = document.getElementById("station-list");
 const departureStation = document.getElementById("departure-station");
 const date = document.getElementById("date");
 
-date.value = new Date().toISOString().slice(0, 16);
+// remove last char
+date.value = new Date(Date.now() + (-1 * new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
 
 departureStation.addEventListener("input", stepOneinputsChange);
 date.addEventListener("input", stepOneinputsChange);
