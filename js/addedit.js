@@ -216,16 +216,13 @@ function setActual(which) {
 }
 
 function setNow(which) {
-	const now = new Date();
-
-	let date = `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()}`;
-	let time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+	const now = new Intl.DateTimeFormat('da-DK', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Europe/Copenhagen' }).format(new Date())
 
 	if(which === "dep") {
-		journey.departureTimeActual = `${date} ${time}`;
+		journey.departureTimeActual = now;
 	} else {
 		// if anything other than "dep" then set arrival time (in case I missed something somewhere that calls this)
-		journey.arrivalTimeActual = `${date} ${time}`;
+		journey.arrivalTimeActual = now;
 	}
 
 	loadJourney();
