@@ -74,6 +74,15 @@ section {
 	padding: 1em;
 }
 
+ol.reversed {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+ol.reversed li {
+  flex: 0 0 auto;
+}
+
 /* mobile rules */
 @media screen and (max-width: 720px) {
 	header nav {
