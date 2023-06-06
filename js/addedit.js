@@ -216,8 +216,9 @@ function setActual(which) {
 }
 
 function setNow(which) {
-	const now = new Intl.DateTimeFormat('da-DK', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Europe/Copenhagen' }).format(new Date())
-
+	let now = new Intl.DateTimeFormat('da-DK', { dateStyle: 'short', timeStyle: 'short', timeZone: 'Europe/Copenhagen' }).format(new Date())
+        now = now.split("").reverse().join("").replace(".",":").split("").reverse().join("");
+	
 	if(which === "dep") {
 		journey.departureTimeActual = now;
 	} else {
