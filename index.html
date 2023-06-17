@@ -10,8 +10,8 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet"> 
 
-	<link rel="stylesheet" href="common.css">
-	<link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="css/index.css">
 	
 	<link rel="shortcut icon" href="img/flag-square.png" type="image/png">
 </head>	
@@ -46,44 +46,7 @@
 		<p>or <a href="javascript:stepFourCalcDetails(true);">manually input a journey</a></p>
 	</section>
 
-	<section id="step-1-strip" style="display: none;">
-		<span id="departure-station-name"></span> 
-		<span>&nbsp;</span>
-		<div>
-			<span id="departure-station-date"></span>
-		</div>
-	</section>
-
-	<section id="step-2" style="display: none;">
-		<form>
-			<label for="metro-toggle"><span class="emoji-icon">Ⓜ️</span> Metro Services</label>
-			<input type="checkbox" id="metro-toggle"><br>
-			<i>Switching to showing Metro services will adjust the date to be from the current time.<br>There is currently no way to view future/past Metro services.</i>
-		</form>
-		
-		<ol id="service-list"></ol>
-	</section>
-
-	<section id="step-2-strip" style="display: none;">
-		<span id="service-name"></span>
-		
-		<span id="service-type"></span>
-
-		<div>
-			<span id="service-time"></span><br>
-			<span id="service-track"></span>
-		</div>
-
-		<div>
-			<span id="service-dest"></span><br>
-			<span id="service-via"></span>
-		</div>		
-	</section>
-
-	<section id="step-3" style="display: none">
-		<ol id="stop-list"></ol>
-	</section>
-
+	
 	<footer>
 		<p style="color: #800; font-weight: bold;"><span class="emoji-icon">⚠️</span> Do not use this service as a journey planner or for realtime information.</p>
 		<p>
@@ -107,12 +70,13 @@
 			<span class="emoji-icon">📍</span> Makes use of data from <a href="https://www.openstreetmap.org/copyright">OpenStreetMap &amp; its contributors</a> (finding nearest stations).
 		</p>
 	</footer>
-	
 
-	<script src="js/0common.js"></script>
-	<script src="js/1find-station.js"></script>
-	<script src="js/2list-deps.js"></script>
-	<script src="js/3show-service.js"></script>
-	<script src="js/4calculate-details.js"></script>
+	<!-- common -->
+	<script src="js/0-journey.js"></script>
+	<script src="js/1-search.js"></script>
+	<script src="js/2-departures.js"></script>
+
+	<!-- country-specific -->
+	<script src="js/systems/dk-rejseplanen/dk-rejseplanen.js"></script>
 </body>
 </html>

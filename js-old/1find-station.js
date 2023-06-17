@@ -56,6 +56,3 @@ async function stepOneListMatches(name) {
 	}
 	document.getElementById("step-1").scrollIntoView();
 }
-
-
-
